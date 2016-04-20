@@ -48,7 +48,8 @@ var {
   StyleSheet,
   Component,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicatorIOS
 } = React;
 
 import Video from 'react-native-video';
@@ -60,22 +61,52 @@ class Main extends Component{
   constructor(props){
     super(props);
     this.state = {
-      username: '',
+      email: '',
+      password: '',
+      showProgress: false,
       error: false
     };
   }
 
-  handleChange(e) {
+  handleChangeEmail(e) {
     this.setState({
-      username: e.nativeEvent.text
+      email: e.nativeEvent.text
+    });
+  }
+
+  handleChangePassword(e) {
+    this.setState({
+      password: e.nativeEvent.text
     });
   }
 
   handleGoToSignup() {
-    var url = `${IP_address}/signup`
-    fetch(url, {
-      method: 'GET',
-    })
+    this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+    this.props.navigator.push({
+      title: 'Signup',
+      component: Signup,
+    });
+  
+  }
+
+  onLoginPress() {
+    console.log('Attempting to log in with username ' + this.state.email);
+    this.setState({showProgress: true});
+
+    var authService = require('./AuthService');
+    authService.login({
+        email: this.state.email,
+        password: this.state.password
+    }, (results)=> {
+        this.setState(Object.assign({
+            showProgress: false
+        }, results));
+
+        if(results.success && this.props.onLogin){
+          console.log('results of login: ', results);
+            this.props.onLogin();
+        }
+    });
   }
 
   handleSubmit(){
@@ -137,8 +168,25 @@ class Main extends Component{
 
   }
 
+
+
   render(){
     var showErr = ( this.state.error ? <Text> {this.state.error} </Text> : <View></View> );
+
+    var errorCtrl = <View />;
+
+        if(!this.state.success && this.state.badCredentials){
+            errorCtrl = <Text style={styles.error}>
+                That username and password combination did not work
+            </Text>;
+        }
+
+        if(!this.state.success && this.state.unknownError){
+            errorCtrl = <Text style={styles.error}>
+                We experienced an unexpected issue
+            </Text>;
+        }
+
     return (
         <View style={styles.mainContainer}>
           <Video source={{uri:"background"}}
@@ -155,20 +203,21 @@ class Main extends Component{
             autoCorrect={false}
             placeholder='Email'
             placeholderTextColor='white'
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChangeEmail.bind(this)}
           />
           <TextInput
             style={styles.textInput}
+            secureTextEntry={true}
             autoCapitalize='none'
             autoCorrect={false}
             placeholder='Password'
             placeholderTextColor='white'
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChangePassword.bind(this)}
           />
           
           <TouchableHighlight
             style={styles.button}
-            onPress={this.handleSubmit.bind(this)}
+            onPress={this.onLoginPress.bind(this)}
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign in</Text>
           </TouchableHighlight>
@@ -177,7 +226,7 @@ class Main extends Component{
 
           <TouchableHighlight
             style={styles.signupButton}
-            onPress={this.handleSubmit.bind(this)}
+            onPress={this.handleGoToSignup()}
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign up</Text>
           </TouchableHighlight>

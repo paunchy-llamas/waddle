@@ -22,7 +22,7 @@ describe('Basic server functionality', () => {
 // Tests for database sign-in
 describe('Basic sign-in/sign-up functionality', () => {
   it('Should be able to add new user to database and sign-in with that user', (done) => {
-    var newUser = { username: 'test' };
+    var newUser = { email: 'test@test.com', password: 'test' };
     request({
       url: 'http://127.0.0.1:8000/signup',
       method: 'POST',

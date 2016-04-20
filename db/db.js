@@ -9,8 +9,9 @@ var SuccessfulMatch = require('./models/successfulMatch');
 var Promise = require('bluebird');
 
 exports.db = {
-  getUser: function(email) {
+  getUser: function(email, password) {
     // Creates object to query database
+
     var dbQueryObject = {};
     if (email) {
       dbQueryObject.email = email;
@@ -22,7 +23,15 @@ exports.db = {
           console.log('ERROR calling getUsers function', error);
           reject(error);
         } else {
-          resolve(user);
+          user.comparePasswords(password)
+            .then(function (foundUser) {
+              if (foundUser) {
+                var token = jwt.encode(user, 'secret');
+                res.json({token: token});
+              } else {
+                return next(new Error('No user'));
+              }
+            });
         }
       });
     });
@@ -47,12 +56,11 @@ exports.db = {
     });
   },
 
-  addUser: function(username, firstName, email, password, funFact, profileImage) {
+  addUser: function(firstName, email, password, funFact, profileImage) {
     var newDbEntry = {
-      username: username,
+      firstName: firstName,
       email: email,
       password: password,
-      firstName: firstName,
       funFact: funFact,
       profileImage: profileImage
     };

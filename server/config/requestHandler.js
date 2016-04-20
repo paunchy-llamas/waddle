@@ -86,9 +86,9 @@ module.exports = {
   postSignin: function(req, res) {
     // check user exist in the database
     console.log('postSignin fired!', req.body);
-    // var username = req.body.username;
     var email = req.body.email;
-    db.getUser(email)
+    var password = req.body.password;
+    db.getUser(email, password)
       .then(function(user){
         if (user) {
           res.status(200).send('Sign in successful');
@@ -103,13 +103,13 @@ module.exports = {
   },
 
   postSignup: function(req, res) {
-    var username = req.body.username;
+    var name = req.body.firstName;
     var email = req.body.email;
     var password = req.body.password;
     var funFact = req.body.funFact;
     var profileImage = req.body.profileImage;
 
-    db.addUser(username, email, funFact, profileImage)
+    db.addUser(name, email, password, funFact, profileImage)
       .then(function(user){
         res.status(201).send('User Create!');
       })

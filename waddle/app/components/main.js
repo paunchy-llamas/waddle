@@ -48,7 +48,8 @@ var {
   StyleSheet,
   Component,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicatorIOS
 } = React;
 
 import Video from 'react-native-video';
@@ -61,6 +62,8 @@ class Main extends Component{
     super(props);
     this.state = {
       username: '',
+      password: '',
+      showProgress: false,
       error: false
     };
   }
@@ -76,6 +79,25 @@ class Main extends Component{
     fetch(url, {
       method: 'GET',
     })
+  }
+
+  onLoginPress() {
+    console.log('Attempting to log in with username ' + this.state.username);
+    this.setState({showProgress: true});
+
+    var authService = require('./AuthService');
+    authService.login({
+        username: this.state.username,
+        password: this.state.password
+    }, (results)=> {
+        this.setState(Object.assign({
+            showProgress: false
+        }, results));
+
+        if(results.success && this.props.onLogin){
+            this.props.onLogin();
+        }
+    });
   }
 
   handleSubmit(){
@@ -159,6 +181,7 @@ class Main extends Component{
           />
           <TextInput
             style={styles.textInput}
+            secureTextEntry={true}
             autoCapitalize='none'
             autoCorrect={false}
             placeholder='Password'

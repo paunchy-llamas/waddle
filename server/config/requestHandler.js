@@ -86,11 +86,11 @@ module.exports = {
   postSignin: function(req, res) {
     // check user exist in the database
     console.log('postSignin fired!', req.body);
-    var username = req.body.username;
-    // var email = req.body.email;
-    db.getUsers(username)
-      .then(function(users){
-        if (users.length) {
+    // var username = req.body.username;
+    var email = req.body.email;
+    db.getUser(email)
+      .then(function(user){
+        if (user) {
           res.status(200).send('Sign in successful');
         } else {
           res.status(401).send('incorrect username or email');

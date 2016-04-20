@@ -23,8 +23,9 @@ class Signup extends Component {
     super(props);
     this.state = {
       firstName: '',
-      funFact: '',
       email: '',
+      password: '',
+      funFact: '',
       keyboardOffset: new Animated.Value(0),
       error: false
     };
@@ -77,10 +78,10 @@ class Signup extends Component {
         leftButton: "Signup",
         component: Selfie,
         passProps: {
-          username: this.props.username,
           firstName: this.state.firstName,
+          email: this.state.email,
+          password: this.state.password,
           funFact: this.state.funFact,
-          email: this.state.email
         }
       });
     }.bind(this));
@@ -106,12 +107,18 @@ class Signup extends Component {
     })
   }
 
+  handlePasswordChange(e) {
+    this.setState({
+      password: e.nativeEvent.text
+    })
+  }
+
   render() {
     var placeholderColor = '#888FA7';
     console.log(styles.mainContainer);
     return (
       <Animated.View style={[styles.mainContainer, {marginBottom: this.state.keyboardOffset}]}>
-        <Text style={styles.title}>Tell us a little about yourself</Text>
+        <Text style={styles.title}>Create an account</Text>
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
@@ -122,16 +129,24 @@ class Signup extends Component {
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
-          placeholder='A fun fact'
+          autoCorrect={false}
+          placeholder='Email'
+          placeholderTextColor={placeholderColor}
+          onChange={this.handleEmailChange.bind(this)}/> 
+         <TextInput
+          style={styles.textInput}
+          secureTextEntry={true}
+          autoCapitalize='none'
+          autoCorrect={false}
+          placeholder='Password'
+          placeholderTextColor={placeholderColor}
+          onChange={this.handlePasswordChange.bind(this)}/>            
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize='none'
+          placeholder='Fun fact about yourself'
           placeholderTextColor={placeholderColor}
           onChange={this.handleFunFactChange.bind(this)}/>
-          <TextInput
-            style={styles.textInput}
-            autoCapitalize='none'
-            autoCorrect={false}
-            placeholder='Email'
-            placeholderTextColor={placeholderColor}
-            onChange={this.handleEmailChange.bind(this)}/>          
         <TouchableHighlight
           style={styles.button}
           onPress={this.handleNewUser.bind(this)}

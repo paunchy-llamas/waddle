@@ -9,23 +9,20 @@ var SuccessfulMatch = require('./models/successfulMatch');
 var Promise = require('bluebird');
 
 exports.db = {
-  getUsers: function(username, email) {
+  getUser: function(email) {
     // Creates object to query database
     var dbQueryObject = {};
-    if (username) {
-      dbQueryObject.username = username;
-    }
     if (email) {
       dbQueryObject.email = email;
     }
 
     return new Promise(function(resolve, reject) {
-      User.find(dbQueryObject, function(error, users) {
+      User.find(dbQueryObject, function(error, user) {
         if (error) {
           console.log('ERROR calling getUsers function', error);
           reject(error);
         } else {
-          resolve(users);
+          resolve(user);
         }
       });
     });

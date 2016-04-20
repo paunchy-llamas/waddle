@@ -4,7 +4,6 @@ var Q = require('q');
 var bluebird = require('bluebird');
 
 var userSchema = mongoose.Schema({
-  username: String,
   firstName: String,
   email: String,
   password: String,

@@ -114,7 +114,7 @@ module.exports = {
         res.status(201).send('User Create!');
       })
       .catch(function(err){
-        console.log('There was an error calling db.addUser from postSignup for user: ' + username, err);
+        console.log('There was an error calling db.addUser from postSignup for user: ', err);
         res.status(500).send();
       });
   },

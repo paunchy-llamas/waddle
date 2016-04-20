@@ -81,10 +81,12 @@ class Main extends Component{
   }
 
   handleGoToSignup() {
-    var url = `${IP_address}/signup`
-    fetch(url, {
-      method: 'GET',
-    })
+    this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+    this.props.navigator.push({
+      title: 'Signup',
+      component: Signup,
+    });
+  
   }
 
   onLoginPress() {
@@ -166,6 +168,8 @@ class Main extends Component{
 
   }
 
+
+
   render(){
     var showErr = ( this.state.error ? <Text> {this.state.error} </Text> : <View></View> );
 
@@ -222,7 +226,7 @@ class Main extends Component{
 
           <TouchableHighlight
             style={styles.signupButton}
-            onPress={this.handleSubmit.bind(this)}
+            onPress={this.handleGoToSignup()}
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign up</Text>
           </TouchableHighlight>

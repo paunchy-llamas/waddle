@@ -51,6 +51,7 @@ class LooksGood extends Component{
     formdata.append('firstName', this.props.firstName);
     formdata.append('funFact', this.props.funFact);
     formdata.append('email', this.props.email);
+    formdata.append('phone', this.props.phone);
     formdata.append('photo', photo);
 
     console.log('loading.js handleLookingGood end point: ', `${IP_address}/upload`);
@@ -66,7 +67,8 @@ class LooksGood extends Component{
         firstName: this.props.firstName,
         funFact: this.props.funFact,
         email: this.props.email,
-        picture: this.props.picture
+        picture: this.props.picture,
+        phone: this.props.phone
       }
     });
   }
@@ -75,8 +77,8 @@ class LooksGood extends Component{
 
     return (
       <View style={styles.mainContainer}>
-        <Image 
-          style={styles.image} 
+        <Image
+          style={styles.image}
           source={{uri: this.props.picture}} />
         <Text style={styles.title}>How do you look?</Text>
         <TouchableHighlight

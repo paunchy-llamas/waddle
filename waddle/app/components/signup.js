@@ -26,6 +26,7 @@ class Signup extends Component {
       email: '',
       password: '',
       funFact: '',
+      phone: '',
       keyboardOffset: new Animated.Value(0),
       error: false
     };
@@ -87,6 +88,7 @@ class Signup extends Component {
           username: this.state.username,
           password: this.state.password,
           funFact: this.state.funFact,
+          phone: this.props.phone
         }
       });
     }.bind(this));
@@ -121,6 +123,12 @@ class Signup extends Component {
   handlePasswordChange(e) {
     this.setState({
       password: e.nativeEvent.text
+    }
+  }
+
+  handlePhoneChange(e) {
+    this.setState({
+      phone: e.nativeEvent.text
     })
   }
 
@@ -151,20 +159,27 @@ class Signup extends Component {
           autoCorrect={false}
           placeholder='Password'
           placeholderTextColor={placeholderColor}
-          onChange={this.handlePasswordChange.bind(this)}/> 
+          onChange={this.handlePasswordChange.bind(this)}/>
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
           autoCorrect={false}
           placeholder={'First name (optional)'}
           placeholderTextColor={placeholderColor}
-          onChange={this.handleNameChange.bind(this)}/>           
+          onChange={this.handleNameChange.bind(this)}/>
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
           placeholder='Fun fact about yourself'
           placeholderTextColor={placeholderColor}
           onChange={this.handleFunFactChange.bind(this)}/>
+          <TextInput
+          style={styles.textInput}
+          autoCapitalize='none'
+          autoCorrect={false}
+          placeholder={'Phone'}
+          placeholderTextColor={placeholderColor}
+          onChange={this.handlePhoneChange.bind(this)}/>
         <TouchableHighlight
           style={styles.button}
           onPress={this.handleNewUser.bind(this)}

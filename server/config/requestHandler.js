@@ -143,10 +143,10 @@ module.exports = {
      * Client will send a GET request to /match with 4 headers: username, longitude, latitude, requestType
      *      - username is the username string
      *      - longitude/latitude are user's location
-     *      - requestType is should equal either 'request-match' or 'retrieve-match'. 
-     *            >The first request made by the client should have a type of 'request-match'. This will instruct the server to start 
-     *             looking for a match. A '200' response means that the server has received the request and will start searching for a match. 
-     *            > After 60s, the client should send a follow-up request with the type 'retrieve-match'. 
+     *      - requestType is should equal either 'request-match' or 'retrieve-match'.
+     *            >The first request made by the client should have a type of 'request-match'. This will instruct the server to start
+     *             looking for a match. A '200' response means that the server has received the request and will start searching for a match.
+     *            > After 60s, the client should send a follow-up request with the type 'retrieve-match'.
      *              This will instruct the server to return the match, if available.
      */
 
@@ -179,8 +179,8 @@ module.exports = {
 
           /*
            * Lines 108 through 119 are 'dummy code' that will allow us to pass the unit tests.
-           * This code is necessary because the continuous integration on Travis-CI does not have access to our Foursquare API keys. 
-           * As such, the below vode (i.e., lines 120 onwards) will always fail the unit tests during continuous integration. 
+           * This code is necessary because the continuous integration on Travis-CI does not have access to our Foursquare API keys.
+           * As such, the below vode (i.e., lines 120 onwards) will always fail the unit tests during continuous integration.
            * Although all the code below has not been unit tested, it has been manually tested and is functional.
           */
           if (!foursquare.client_id) {
@@ -346,7 +346,7 @@ module.exports = {
             console.log('Sent:', file);
           }
         });
-        
+
       })
       .catch(function(error) {
         console.log('There was an error calling db.getUserByEmail from getProfilePhoto: ', error);
@@ -372,6 +372,7 @@ module.exports = {
       var firstName = fields.firstName;
       var funFact = fields.funFact;
       var email = fields.email;
+      var phone = fields.phone;
       var fileName = files.photo.path.replace('server/uploads/', '');
 
       var newInfo = {
@@ -379,7 +380,8 @@ module.exports = {
         profileImage: fileName,
         firstName: firstName,
         funFact: funFact,
-        email: email
+        email: email,
+        phone: phone
       };
 
 

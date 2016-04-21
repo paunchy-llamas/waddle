@@ -6,8 +6,9 @@ module.exports = function (app, express) {
   app.post('/signin', requestHandler.postSignin);
   app.post('/signup', requestHandler.postSignup);
   app.get('/match', requestHandler.getMatch);
-  app.get('/users/:username/profilePhoto', requestHandler.getProfilePhoto);
-  app.get('/users/:username', requestHandler.getUserInfo);
+  app.get('/users/:email/profilePhoto', requestHandler.getProfilePhoto);
+  // app.get('/users/:username', requestHandler.getUserInfo);
+  app.get('/users/:email', requestHandler.getUserInfo);
   app.post('/upload', requestHandler.upload);
   app.post('/rate', requestHandler.rateUser);
 

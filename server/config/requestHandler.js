@@ -88,7 +88,7 @@ module.exports = {
     console.log('postSignin fired!', req.body);
     var email = req.body.email;
     var password = req.body.password;
-    db.getUser(email)
+    db.getUserByEmail(email)
       .then(function(user){
         if (user) {
           console.log('postSignin: getUser returns a user', user);
@@ -113,12 +113,13 @@ module.exports = {
 
   postSignup: function(req, res) {
     var name = req.body.firstName;
+    var username = req.body.username;
     var email = req.body.email;
     var password = req.body.password;
     var funFact = req.body.funFact;
     var profileImage = req.body.profileImage;
 
-    return db.addUser(name, email, password, funFact, profileImage)
+    return db.addUser(name, username, email, password, funFact, profileImage)
       .then(function(user){
         res.status(201).send('User Create!');
       })
@@ -254,11 +255,11 @@ module.exports = {
                   var firstMatchedUser; // Will store user object matching first user in match
                   var secondMatchedUser; // Will store user object matching second user in match
 
-                  db.getUsers(match.firstMatchedUsername)
+                  db.getUserByUsername(match.firstMatchedUsername)
                     .then(function(users) {
                       firstMatchedUser = users[0].toObject();
 
-                      db.getUsers(match.secondMatchedUsername)
+                      db.getUserByUsername(match.secondMatchedUsername)
                         .then(function(users) {
                           secondMatchedUser = users[0].toObject();
                           var responseObject = {
@@ -270,12 +271,12 @@ module.exports = {
                           res.send(stringifiedResponseObject);
                         })
                         .catch(function(error) {
-                          console.log('There was an error calling db.getUsers from getMatch', error);
+                          console.log('There was an error calling db.getUserByUsername from getMatch', error);
                           res.status(500).send();
                         });
                     })
                     .catch(function(error) {
-                      console.log('There was an error calling db.getUsers from getMatch', error);
+                      console.log('There was an error calling db.getUserByUsername from getMatch', error);
                       res.status(500).send();
                     });
                 } else {
@@ -300,9 +301,11 @@ module.exports = {
   },
 
   getUserInfo: function(req, res) {
-    var username = req.params.username.toLowerCase();
+    console.log('req.params: ', req.params);
+    console.log('req.params.username: ', req.params.username);
+    var email = req.params.email.toLowerCase();
 
-    db.getUsers(username)
+    db.getUserByEmail(email)
       .then(function(users) {
         var user = users[0];
         console.log(users);
@@ -310,17 +313,15 @@ module.exports = {
         res.status(200).json(users[0]);
       })
       .catch(function(error) {
-        console.log('There was an error calling db.getUsers from getUserInfo for user: ' + username, error);
+        console.log('There was an error calling db.getUserByUsername from getUserInfo for user: ' + username, error);
         res.status(500).send();
       });
   },
 
   getProfilePhoto: function(req, res) {
-    var username = req.params.username.toLowerCase();
-    console.log(username);
-    // var file = username + '_' + 'profile.jpg'; // profile image name
+    var email = req.params.email.toLowerCase();
 
-    db.getUsers(username)
+    db.getUserByEmail(email)
       .then(function(users) {
         console.log(users[0]);
         var file  = users[0].profileImage;
@@ -341,7 +342,7 @@ module.exports = {
         
       })
       .catch(function(error) {
-        console.log('There was an error calling db.getUsers from getProfilePhoto for user: ' + username, error);
+        console.log('There was an error calling db.getUserByEmail from getProfilePhoto for user: ' + email, error);
         res.status(500).send();
       });
   },
@@ -399,7 +400,7 @@ module.exports = {
       return;
     }
 
-    db.getUsers(username)
+    db.getUsersByUsername(username)
       .then(function(users) {
         // Check if user exists
         if (users.length === 0) {
@@ -421,7 +422,7 @@ module.exports = {
         res.status(201).send();
       })
       .catch(function(error) {
-        console.log('Error calling getUsers from rateUser for ' + username, error);
+        console.log('Error calling getUsersByUsername from rateUser for ' + username, error);
         res.status(500).send();
       });
   }

@@ -25,34 +25,38 @@ class AuthService {
         })
         .then((res)=> {
             if(res.status >= 200 && res.status < 300){
-                console.log('this is the res after login attempt: ', res);
-                return res;
+              console.log('login returns this res: ', res);
+                return cb({success: true});
             }
 
             throw {
-                badCredentials: res.status == 401,
-                unknownError: res.status != 401
+                badCredentials: res.status === 401,
+                unknownError: res.status !== 401
             }
         })
-        .then((res)=> {
-            return res.json();
-        })
-        .then((results)=> {
-            AsyncStorage.multiSet([
-                [authKey, encodedAuth],
-                [userKey, JSON.stringify(results)]
-            ], (err)=> {
-                if(err){
-                    throw err;
-                }
+        // .then((res)=> {
+        //     console.log('res made into json: ', res);
+        //     return res;
+        // })
+        // .then((results)=> {
+        //     console.log('results: ', results);
+        //     AsyncStorage.multiSet([
+        //         [authKey, encodedAuth],
+        //         [userKey, JSON.stringify(results)]
+        //     ], (err)=> {
+        //         if(err){
+        //             throw err;
+        //         }
 
-                return cb({success: true});
-            })
-        })
+        //         return cb({success: true});
+        //     })
+        // })
         .catch((err)=> {
             return cb(err);
         });
     }
+
+
 }
 
 module.exports = new AuthService();

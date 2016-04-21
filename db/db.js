@@ -9,8 +9,7 @@ var SuccessfulMatch = require('./models/successfulMatch');
 var Promise = require('bluebird');
 
 exports.db = {
-  getUser: function(email) {
-    // Creates object to query database
+  getUserByEmail: function(email) {
 
     return new Promise(function(resolve, reject) {
       User.find({email: email}, function(error, user) {
@@ -21,6 +20,24 @@ exports.db = {
 
         if (user.length === 0) {
           reject('invalid email/password combination');
+        } else {
+          resolve(user);
+        } 
+      });
+    });
+  },
+
+  getUserByUsername: function(username) {
+
+    return new Promise(function(resolve, reject) {
+      User.find({username: username}, function(error, user) {
+        if (error) {
+          console.log('ERROR calling getUsers function', error);
+          reject(error);
+        } 
+
+        if (user.length === 0) {
+          reject('user not found');
         } else {
           resolve(user);
         } 
@@ -60,9 +77,10 @@ exports.db = {
     });
   },
 
-  addUser: function(firstName, email, password, funFact, profileImage) {
+  addUser: function(firstName, username, email, password, funFact, profileImage) {
     var newDbEntry = {
       firstName: firstName,
+      username: username,
       email: email,
       password: password,
       funFact: funFact,

@@ -61,10 +61,10 @@ class Main extends Component{
   constructor(props){
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      // email: '',
+      // password: '',
       showProgress: false,
-      error: null
+      // error: null
     };
   }
 
@@ -90,7 +90,7 @@ class Main extends Component{
   
   }
 
-  onLoginPress() {
+  onLoginPress(){
     console.log('Attempting to log in with username ' + this.state.email);
     this.setState({showProgress: true});
 
@@ -99,15 +99,50 @@ class Main extends Component{
         email: this.state.email,
         password: this.state.password
     }, (results)=> {
+        console.log('here is the login results obj: ', results);
         this.setState(Object.assign({
             showProgress: false
         }, results));
 
-        if(results.success && this.props.onLogin){
-          console.log('results of login: ', results);
-            this.props.onLogin();
+        // if(results.success && this.props.onLogin){
+        //   console.log('results of login: ', results);
+        //     this.props.onLogin();
+        // }
+
+        if (results.success) {
+          fetch(`${IP_address}/users/${this.state.email}`, {
+            method: 'GET'
+          })
+          .then(function(response) {
+            response.json().then(function(user) {
+              console.log(user);
+              this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+              this.props.navigator.push({
+                title: 'Welcome',
+                component: Welcome,
+                passProps: {
+                  username: user.username,
+                  firstName: user.firstName,
+                  funFact: user.funFact,
+                  email: user.email
+                }
+              });
+            }.bind(this));
+
+            // make it impossible to go back to sign in screen
+            // passProps: {userInfo: res} 
+            // should pass user ID, other details as received from OAuth
+          }.bind(this));
+        } else if (results.badCredentials) {
+            this.setState({
+              error: 'invalid email/password combination'
+            });
+        } else if (results.unknownError) {
+            this.setState({
+              error: 'unknown error'
+            });
         }
-    });
+      });
   }
 
   handleSubmit(){

@@ -38,11 +38,11 @@ class Welcome extends Component{
   }
 
   render(){
-    var imageLink = this.props.picture || `${IP_address}/users/${this.props.username}/profilePhoto?date=${Date.now()}`;
+    var imageLink = this.props.picture || `${IP_address}/users/${this.props.email}/profilePhoto?date=${Date.now()}`;
     console.log('match.js link to image: ', imageLink);
     return (
       <View style={styles.mainContainer}>
-        <Text style={styles.welcomeText}>hello, {this.props.firstName || 'rando'}</Text>
+        <Text style={styles.welcomeText}>Welcome, { this.props.firstName || this.props.username}</Text>
         <Image 
           style={styles.avatar} 
           source={{uri: imageLink}} />

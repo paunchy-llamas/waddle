@@ -23,6 +23,7 @@ class Signup extends Component {
     super(props);
     this.state = {
       firstName: '',
+      username: '',
       email: '',
       password: '',
       funFact: '',
@@ -69,6 +70,7 @@ class Signup extends Component {
       body: JSON.stringify({
         firstName: this.state.firstName,
         email: this.state.email,
+        username: this.state.username,
         password: this.state.password,
         funFact: this.state.funFact
       })
@@ -83,6 +85,7 @@ class Signup extends Component {
         passProps: {
           firstName: this.state.firstName,
           email: this.state.email,
+          username: this.state.username,
           password: this.state.password,
           funFact: this.state.funFact,
         }
@@ -94,6 +97,12 @@ class Signup extends Component {
   handleNameChange(e) {
     this.setState({
       firstName: e.nativeEvent.text
+    });
+  }
+
+  handleUsernameChange(e) {
+    this.setState({
+      username: e.nativeEvent.text
     });
   }
 
@@ -122,20 +131,20 @@ class Signup extends Component {
     return (
       <Animated.View style={[styles.mainContainer, {marginBottom: this.state.keyboardOffset}]}>
         <Text style={styles.title}>Create an account</Text>
-        <TextInput
+         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
           autoCorrect={false}
-          placeholder={'First name'}
+          placeholder={'Username'}
           placeholderTextColor={placeholderColor}
-          onChange={this.handleNameChange.bind(this)}/>
+          onChange={this.handleUsernameChange.bind(this)}/>
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
           autoCorrect={false}
           placeholder='Email'
           placeholderTextColor={placeholderColor}
-          onChange={this.handleEmailChange.bind(this)}/> 
+          onChange={this.handleEmailChange.bind(this)}/>
          <TextInput
           style={styles.textInput}
           secureTextEntry={true}
@@ -143,7 +152,14 @@ class Signup extends Component {
           autoCorrect={false}
           placeholder='Password'
           placeholderTextColor={placeholderColor}
-          onChange={this.handlePasswordChange.bind(this)}/>            
+          onChange={this.handlePasswordChange.bind(this)}/> 
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize='none'
+          autoCorrect={false}
+          placeholder={'Optional: first name'}
+          placeholderTextColor={placeholderColor}
+          onChange={this.handleNameChange.bind(this)}/>           
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'

@@ -188,9 +188,14 @@ module.exports = StyleSheet.create({
     height: 360
   },
   error: {
-        color: 'red',
-        paddingTop: 10
-    }
+    position: 'absolute',
+    bottom: 225,
+    color: 'red',
+    paddingTop: 10,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent'
+    // backgroundColor: 'rgba(255, 255, 255, 0.5)'
+  }
 
 });
 

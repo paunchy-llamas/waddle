@@ -17,7 +17,6 @@ var {
   TouchableHighlight
 } = React;
 
-
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -157,7 +156,7 @@ class Signup extends Component {
           style={styles.textInput}
           autoCapitalize='none'
           autoCorrect={false}
-          placeholder={'Optional: first name'}
+          placeholder={'First name (optional)'}
           placeholderTextColor={placeholderColor}
           onChange={this.handleNameChange.bind(this)}/>           
         <TextInput

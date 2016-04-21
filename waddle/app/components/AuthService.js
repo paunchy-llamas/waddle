@@ -34,23 +34,6 @@ class AuthService {
                 unknownError: res.status !== 401
             }
         })
-        // .then((res)=> {
-        //     console.log('res made into json: ', res);
-        //     return res;
-        // })
-        // .then((results)=> {
-        //     console.log('results: ', results);
-        //     AsyncStorage.multiSet([
-        //         [authKey, encodedAuth],
-        //         [userKey, JSON.stringify(results)]
-        //     ], (err)=> {
-        //         if(err){
-        //             throw err;
-        //         }
-
-        //         return cb({success: true});
-        //     })
-        // })
         .catch((err)=> {
             return cb(err);
         });

@@ -41,6 +41,7 @@
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
 var styles = require('./Styles');
+// var CookieManager = require('react-native-cookies');
 
 var {
   View,
@@ -67,6 +68,14 @@ class Main extends Component{
       // error: null
     };
   }
+
+  // checkForExistingCookie() {
+  //   // Get cookies as a request header string
+  //   CookieManager.get('/', (err, res) => {
+  //     console.log('Got cookies for url', res);
+  //     // Outputs 'user_session=abcdefg; path=/;'
+  //   })
+  // }
 
   handleChangeEmail(e) {
     this.setState({
@@ -135,93 +144,92 @@ class Main extends Component{
           }.bind(this));
         } else if (results.badCredentials) {
             this.setState({
-              error: 'invalid email/password combination'
+              error: true
             });
         } else if (results.unknownError) {
             this.setState({
-              error: 'unknown error'
+              error: true
             });
         }
       });
   }
 
-  handleSubmit(){
-    console.log('insert OAuth integration here');
-    var url = `${IP_address}/signin`;
-    console.log('main.js handleSubmit POST to signin: ', url);
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: this.state.username
-      })
-    })
-    .then(function(res){
-      var isInvalid = /[\s&<>"'`=\/]/g.test(this.state.username);
-      if (res.status == 200) {
-        this.setState({
-          error: false
-        });
-        console.log('main.js handleSubmit GET userInfo end point: ', `${IP_address}/users/${this.state.username}`);
-        fetch(`${IP_address}/users/${this.state.username}`, {
-          method: 'GET'
-        })
-        .then(function(response) {
-          response.json().then(function(user) {
-            console.log(user);
-            this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
-            this.props.navigator.push({
-              title: 'Welcome',
-              component: Welcome,
-              passProps: {
-                username: this.state.username,
-                firstName: user.firstName,
-                funFact: user.funFact,
-                email: user.email
-              }
-            });
-          }.bind(this));
+  // handleSubmit(){
+  //   console.log('insert OAuth integration here');
+  //   var url = `${IP_address}/signin`;
+  //   console.log('main.js handleSubmit POST to signin: ', url);
+  //   fetch(url, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       username: this.state.username
+  //     })
+  //   })
+  //   .then(function(res){
+  //     var isInvalid = /[\s&<>"'`=\/]/g.test(this.state.username);
+  //     if (res.status == 200) {
+  //       this.setState({
+  //         error: false
+  //       });
+  //       console.log('main.js handleSubmit GET userInfo end point: ', `${IP_address}/users/${this.state.username}`);
+  //       fetch(`${IP_address}/users/${this.state.username}`, {
+  //         method: 'GET'
+  //       })
+  //       .then(function(response) {
+  //         response.json().then(function(user) {
+  //           console.log(user);
+  //           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+  //           this.props.navigator.push({
+  //             title: 'Welcome',
+  //             component: Welcome,
+  //             passProps: {
+  //               username: this.state.username,
+  //               firstName: user.firstName,
+  //               funFact: user.funFact,
+  //               email: user.email
+  //             }
+  //           });
+  //         }.bind(this));
 
-          // make it impossible to go back to sign in screen
-          // passProps: {userInfo: res} 
-          // should pass user ID, other details as received from OAuth
-        }.bind(this));
-      } else if (isInvalid) {
-        this.setState({
-          error: 'Invalid Username\n Please only use alphanumeric characters'
-        });
-      } else {
-        this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
-        this.props.navigator.push({
-          title: 'Signup',
-          component: Signup,
-          passProps: {username: this.state.username}
-        });
-      }
-    }.bind(this));
+  //         // make it impossible to go back to sign in screen
+  //         // passProps: {userInfo: res} 
+  //         // should pass user ID, other details as received from OAuth
+  //       }.bind(this));
+  //     } else if (isInvalid) {
+  //       this.setState({
+  //         error: 'Invalid Username\n Please only use alphanumeric characters'
+  //       });
+  //     } else {
+  //       this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+  //       this.props.navigator.push({
+  //         title: 'Signup',
+  //         component: Signup,
+  //         passProps: {username: this.state.username}
+  //       });
+  //     }
+  //   }.bind(this));
 
-  }
+  // }
 
 
 
   render(){
-    var showErr = ( this.state.error ? <Text> {this.state.error} </Text> : <View></View> );
 
     var errorCtrl = <View />;
 
-        if(!this.state.success && this.state.badCredentials){
-            errorCtrl = <Text style={styles.error}>
-                That username and password combination did not work
-            </Text>;
-        }
+    if(!this.state.success && this.state.badCredentials){
+        errorCtrl = <Text style={styles.error}>
+            Invalid email/password combination
+        </Text>;
+    }
 
-        if(!this.state.success && this.state.unknownError){
-            errorCtrl = <Text style={styles.error}>
-                We experienced an unexpected issue
-            </Text>;
-        }
+    if(!this.state.success && this.state.unknownError){
+        errorCtrl = <Text style={styles.error}>
+            We experienced an unexpected issue
+        </Text>;
+    }
 
     return (
         <View style={styles.mainContainer}>
@@ -257,6 +265,7 @@ class Main extends Component{
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign in</Text>
           </TouchableHighlight>
+          {errorCtrl}
 
           <Text style={styles.mainBottomText}>Don't have an account?</Text>
 
@@ -266,7 +275,6 @@ class Main extends Component{
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign up</Text>
           </TouchableHighlight>
-          {showErr}
         </View>
     )
   }

@@ -22,7 +22,7 @@ describe('Basic server functionality', () => {
 // Tests for database sign-in
 describe('Basic sign-in/sign-up functionality', () => {
   it('Should be able to add new user to database and sign-in with that user', (done) => {
-    var newUser = { username: 'test' };
+    var newUser = { email: 'test@test.com', username: 'test', password: 'test' };
     request({
       url: 'http://127.0.0.1:8000/signup',
       method: 'POST',
@@ -36,7 +36,7 @@ describe('Basic sign-in/sign-up functionality', () => {
         request({
           url: 'http://127.0.0.1:8000/signin',
           method: 'POST',
-          json: newUser,
+          json: { email: newUser.email, password: newUser.password },
         }, function(error, response, body) {
           if (error) {
             // Automatically failing if the request does not go through
@@ -161,11 +161,11 @@ describe('Matching algo functionality', () => {
 });
 
 describe('Username endpoint functionality', () => {
-  it('Should respond to requests made to the /users/:username endpoint when the username is valid', (done) => {
-    request.get('http://127.0.0.1:8000/users/test', (error, response, body) => {
+  it('Should respond to requests made to the /users/:email endpoint when the email is valid', (done) => {
+    request.get('http://127.0.0.1:8000/email/test@test.com', (error, response, body) => {
       if(error) {
         expect(true).toEqual(false);
-        console.log('Error sending GET request to /users/:username', error);
+        console.log('Error sending GET request to /users/:email', error);
         done();
       } else {
         body = JSON.parse(body);
@@ -175,11 +175,11 @@ describe('Username endpoint functionality', () => {
       }
     });
   });
-  it('Should not respond made to the /users/:username endpoint when the username is invalid', (done) => {
-    request.get('http://127.0.0.1:8000/users/arglebargle', (error, response, body) => {
+  it('Should not respond made to the /users/:email endpoint when the email is invalid', (done) => {
+    request.get('http://127.0.0.1:8000/users/arglebargle@nonexistent.com', (error, response, body) => {
       if (error) {
         expect(true).toEqual(false);
-        console.log('Error sending GET request to /users/:username', error);
+        console.log('Error sending GET request to /users/:email', error);
         done();
       } else {
         expect(response.statusCode).toEqual(200);
@@ -245,7 +245,7 @@ describe('User rating functionality', () => {
     });
   });
   it('Should respond with an accurate user rating', (done) => {
-    request.get('http://127.0.0.1:8000/users/test', function(error, response, body) {
+    request.get('http://127.0.0.1:8000/users/test@test.com', function(error, response, body) {
       if(error) {
         expect(true).toEqual(false);
         console.log('Error sending POST request to /rate', error);

@@ -96,21 +96,18 @@ module.exports = {
             .then(function(success) {
               if (success) {
                 console.log('postSignin: getUser sign in successful ', success);
-                res.status(200).send('Sign in successful');
+                res.status(200).send('sign in successful');
               } 
             })
             .catch(function(err) {
-              console.log('postSigning: getUser sign in not successful ', err);
+              console.log('postSignin: password incorrect ', err);
               res.status(401).send('invalid email/password combination');
             })
-        } else {
-          console.log('postSignin: getUser returns invalid login');
-          res.status(401).send('invalid email/password combination');
         }
       })
       .catch(function(err){
-        console.log('There was an error calling db.getUser from postSignin for user: ');
-        res.status(500).send();
+        console.log('postSignin: user not found ', err);
+        res.status(401).send('invalid email/password combination');
       });
   },
 

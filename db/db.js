@@ -20,7 +20,7 @@ exports.db = {
         } 
 
         if (user.length === 0) {
-          reject(user);
+          reject('invalid email/password combination');
         } else {
           resolve(user);
         } 

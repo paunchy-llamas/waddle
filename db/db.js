@@ -9,25 +9,52 @@ var SuccessfulMatch = require('./models/successfulMatch');
 var Promise = require('bluebird');
 
 exports.db = {
-  getUsers: function(username, email) {
-    // Creates object to query database
-    var dbQueryObject = {};
-    if (username) {
-      dbQueryObject.username = username;
-    }
-    if (email) {
-      dbQueryObject.email = email;
-    }
+  getUserByEmail: function(email) {
 
     return new Promise(function(resolve, reject) {
-      User.find(dbQueryObject, function(error, users) {
+      User.find({email: email}, function(error, user) {
         if (error) {
           console.log('ERROR calling getUsers function', error);
           reject(error);
+        } 
+
+        if (user.length === 0) {
+          reject('invalid email/password combination');
         } else {
-          resolve(users);
-        }
+          resolve(user);
+        } 
       });
+    });
+  },
+
+  getUserByUsername: function(username) {
+
+    return new Promise(function(resolve, reject) {
+      User.find({username: username}, function(error, user) {
+        if (error) {
+          console.log('ERROR calling getUsers function', error);
+          reject(error);
+        } 
+
+        if (user.length === 0) {
+          reject('user not found');
+        } else {
+          resolve(user);
+        } 
+      });
+    });
+  },
+
+  attemptLogin: function(user, password) {
+    return new Promise(function(resolve, reject) {
+      User.comparePassword(password, user.password).bind(this)
+      .then(function (foundUser) {
+        if (foundUser) {
+          resolve(foundUser);
+        } else {
+          reject('invalid email/password combination');
+        }
+      })
     });
   },
 
@@ -50,12 +77,12 @@ exports.db = {
     });
   },
 
-  addUser: function(username, firstName, email, password, funFact, profileImage) {
+  addUser: function(firstName, username, email, password, funFact, profileImage) {
     var newDbEntry = {
+      firstName: firstName,
       username: username,
       email: email,
       password: password,
-      firstName: firstName,
       funFact: funFact,
       profileImage: profileImage
     };

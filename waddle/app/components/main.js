@@ -48,7 +48,8 @@ var {
   StyleSheet,
   Component,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicatorIOS
 } = React;
 
 import Video from 'react-native-video';
@@ -60,85 +61,167 @@ class Main extends Component{
   constructor(props){
     super(props);
     this.state = {
-      username: '',
-      error: false
+      // email: '',
+      // password: '',
+      showProgress: false,
+      // error: null
     };
   }
 
-  handleChange(e) {
+  handleChangeEmail(e) {
     this.setState({
-      username: e.nativeEvent.text
+      email: e.nativeEvent.text
+    });
+  }
+
+  handleChangePassword(e) {
+    this.setState({
+      password: e.nativeEvent.text
     });
   }
 
   handleGoToSignup() {
-    var url = `${IP_address}/signup`
-    fetch(url, {
-      method: 'GET',
-    })
+    console.log('current routes: ', this.props.navigator.getCurrentRoutes());
+    this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+    this.props.navigator.push({
+      title: 'Signup',
+      component: Signup,
+    });
+  
   }
 
-  handleSubmit(){
-    console.log('insert OAuth integration here');
-    var url = `${IP_address}/signin`;
-    console.log('main.js handleSubmit POST to signin: ', url);
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: this.state.username
-      })
-    })
-    .then(function(res){
-      var isInvalid = /[\s&<>"'`=\/]/g.test(this.state.username);
-      if (res.status == 200) {
-        this.setState({
-          error: false
-        });
-        console.log('main.js handleSubmit GET userInfo end point: ', `${IP_address}/users/${this.state.username}`);
-        fetch(`${IP_address}/users/${this.state.username}`, {
-          method: 'GET'
-        })
-        .then(function(response) {
-          response.json().then(function(user) {
-            console.log(user);
-            this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
-            this.props.navigator.push({
-              title: 'Welcome',
-              component: Welcome,
-              passProps: {
-                username: this.state.username,
-                firstName: user.firstName,
-                funFact: user.funFact,
-                email: user.email
-              }
-            });
+  onLoginPress(){
+    console.log('Attempting to log in with username ' + this.state.email);
+    this.setState({showProgress: true});
+
+    var authService = require('./AuthService');
+    authService.login({
+        email: this.state.email,
+        password: this.state.password
+    }, (results)=> {
+        console.log('here is the login results obj: ', results);
+        this.setState(Object.assign({
+            showProgress: false
+        }, results));
+
+        // if(results.success && this.props.onLogin){
+        //   console.log('results of login: ', results);
+        //     this.props.onLogin();
+        // }
+
+        if (results.success) {
+          fetch(`${IP_address}/users/${this.state.email}`, {
+            method: 'GET'
+          })
+          .then(function(response) {
+            response.json().then(function(user) {
+              console.log(user);
+              this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+              this.props.navigator.push({
+                title: 'Welcome',
+                component: Welcome,
+                passProps: {
+                  username: user.username,
+                  firstName: user.firstName,
+                  funFact: user.funFact,
+                  email: user.email
+                }
+              });
+            }.bind(this));
+
+            // make it impossible to go back to sign in screen
+            // passProps: {userInfo: res} 
+            // should pass user ID, other details as received from OAuth
           }.bind(this));
-
-          // make it impossible to go back to sign in screen
-          // passProps: {userInfo: res} 
-          // should pass user ID, other details as received from OAuth
-        }.bind(this));
-      } else if (isInvalid) {
-        this.setState({
-          error: 'Invalid Username\n Please only use alphanumeric characters'
-        });
-      } else {
-        this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
-        this.props.navigator.push({
-          title: 'Signup',
-          component: Signup,
-          passProps: {username: this.state.username}
-        });
-      }
-    }.bind(this));
-
+        } else if (results.badCredentials) {
+            this.setState({
+              error: true
+            });
+        } else if (results.unknownError) {
+            this.setState({
+              error: true
+            });
+        }
+      });
   }
+
+  // handleSubmit(){
+  //   console.log('insert OAuth integration here');
+  //   var url = `${IP_address}/signin`;
+  //   console.log('main.js handleSubmit POST to signin: ', url);
+  //   fetch(url, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       username: this.state.username
+  //     })
+  //   })
+  //   .then(function(res){
+  //     var isInvalid = /[\s&<>"'`=\/]/g.test(this.state.username);
+  //     if (res.status == 200) {
+  //       this.setState({
+  //         error: false
+  //       });
+  //       console.log('main.js handleSubmit GET userInfo end point: ', `${IP_address}/users/${this.state.username}`);
+  //       fetch(`${IP_address}/users/${this.state.username}`, {
+  //         method: 'GET'
+  //       })
+  //       .then(function(response) {
+  //         response.json().then(function(user) {
+  //           console.log(user);
+  //           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+  //           this.props.navigator.push({
+  //             title: 'Welcome',
+  //             component: Welcome,
+  //             passProps: {
+  //               username: this.state.username,
+  //               firstName: user.firstName,
+  //               funFact: user.funFact,
+  //               email: user.email
+  //             }
+  //           });
+  //         }.bind(this));
+
+  //         // make it impossible to go back to sign in screen
+  //         // passProps: {userInfo: res} 
+  //         // should pass user ID, other details as received from OAuth
+  //       }.bind(this));
+  //     } else if (isInvalid) {
+  //       this.setState({
+  //         error: 'Invalid Username\n Please only use alphanumeric characters'
+  //       });
+  //     } else {
+  //       this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
+  //       this.props.navigator.push({
+  //         title: 'Signup',
+  //         component: Signup,
+  //         passProps: {username: this.state.username}
+  //       });
+  //     }
+  //   }.bind(this));
+
+  // }
+
+
 
   render(){
-    var showErr = ( this.state.error ? <Text> {this.state.error} </Text> : <View></View> );
+
+    var errorCtrl = <View />;
+
+    if(!this.state.success && this.state.badCredentials){
+        errorCtrl = <Text style={styles.error}>
+            Invalid email/password combination
+        </Text>;
+    }
+
+    if(!this.state.success && this.state.unknownError){
+        errorCtrl = <Text style={styles.error}>
+            We experienced an unexpected issue
+        </Text>;
+    }
+
     return (
         <View style={styles.mainContainer}>
           <Video source={{uri:"background"}}
@@ -155,33 +238,34 @@ class Main extends Component{
             autoCorrect={false}
             placeholder='Email'
             placeholderTextColor='white'
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChangeEmail.bind(this)}
           />
           <TextInput
             style={styles.textInput}
+            secureTextEntry={true}
             autoCapitalize='none'
             autoCorrect={false}
             placeholder='Password'
             placeholderTextColor='white'
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChangePassword.bind(this)}
           />
           
           <TouchableHighlight
             style={styles.button}
-            onPress={this.handleSubmit.bind(this)}
+            onPress={this.onLoginPress.bind(this)}
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign in</Text>
           </TouchableHighlight>
+          {errorCtrl}
 
           <Text style={styles.mainBottomText}>Don't have an account?</Text>
 
           <TouchableHighlight
             style={styles.signupButton}
-            onPress={this.handleSubmit.bind(this)}
+            onPress={this.handleGoToSignup.bind(this)}
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign up</Text>
           </TouchableHighlight>
-          {showErr}
         </View>
     )
   }

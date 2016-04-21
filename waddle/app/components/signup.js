@@ -17,14 +17,15 @@ var {
   TouchableHighlight
 } = React;
 
-
 class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
       firstName: '',
-      funFact: '',
+      username: '',
       email: '',
+      password: '',
+      funFact: '',
       keyboardOffset: new Animated.Value(0),
       error: false
     };
@@ -66,7 +67,11 @@ class Signup extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: this.props.username
+        firstName: this.state.firstName,
+        email: this.state.email,
+        username: this.state.username,
+        password: this.state.password,
+        funFact: this.state.funFact
       })
     })
     .then(function(res){
@@ -77,10 +82,11 @@ class Signup extends Component {
         leftButton: "Signup",
         component: Selfie,
         passProps: {
-          username: this.props.username,
           firstName: this.state.firstName,
+          email: this.state.email,
+          username: this.state.username,
+          password: this.state.password,
           funFact: this.state.funFact,
-          email: this.state.email
         }
       });
     }.bind(this));
@@ -90,6 +96,12 @@ class Signup extends Component {
   handleNameChange(e) {
     this.setState({
       firstName: e.nativeEvent.text
+    });
+  }
+
+  handleUsernameChange(e) {
+    this.setState({
+      username: e.nativeEvent.text
     });
   }
 
@@ -106,32 +118,53 @@ class Signup extends Component {
     })
   }
 
+  handlePasswordChange(e) {
+    this.setState({
+      password: e.nativeEvent.text
+    })
+  }
+
   render() {
     var placeholderColor = '#888FA7';
     console.log(styles.mainContainer);
     return (
       <Animated.View style={[styles.mainContainer, {marginBottom: this.state.keyboardOffset}]}>
-        <Text style={styles.title}>Tell us a little about yourself</Text>
+        <Text style={styles.title}>Create an account</Text>
+         <TextInput
+          style={styles.textInput}
+          autoCapitalize='none'
+          autoCorrect={false}
+          placeholder={'Username'}
+          placeholderTextColor={placeholderColor}
+          onChange={this.handleUsernameChange.bind(this)}/>
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
           autoCorrect={false}
-          placeholder={'First name'}
+          placeholder='Email'
           placeholderTextColor={placeholderColor}
-          onChange={this.handleNameChange.bind(this)}/>
+          onChange={this.handleEmailChange.bind(this)}/>
+         <TextInput
+          style={styles.textInput}
+          secureTextEntry={true}
+          autoCapitalize='none'
+          autoCorrect={false}
+          placeholder='Password'
+          placeholderTextColor={placeholderColor}
+          onChange={this.handlePasswordChange.bind(this)}/> 
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
-          placeholder='A fun fact'
+          autoCorrect={false}
+          placeholder={'First name (optional)'}
+          placeholderTextColor={placeholderColor}
+          onChange={this.handleNameChange.bind(this)}/>           
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize='none'
+          placeholder='Fun fact about yourself'
           placeholderTextColor={placeholderColor}
           onChange={this.handleFunFactChange.bind(this)}/>
-          <TextInput
-            style={styles.textInput}
-            autoCapitalize='none'
-            autoCorrect={false}
-            placeholder='Email'
-            placeholderTextColor={placeholderColor}
-            onChange={this.handleEmailChange.bind(this)}/>          
         <TouchableHighlight
           style={styles.button}
           onPress={this.handleNewUser.bind(this)}

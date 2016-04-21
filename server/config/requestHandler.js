@@ -88,16 +88,28 @@ module.exports = {
     console.log('postSignin fired!', req.body);
     var email = req.body.email;
     var password = req.body.password;
-    db.getUser(email, password)
+    db.getUser(email)
       .then(function(user){
         if (user) {
-          res.status(200).send('Sign in successful');
+          console.log('postSignin: getUser returns a user', user);
+          db.attemptLogin(user[0], password)
+            .then(function(success) {
+              if (success) {
+                console.log('postSignin: getUser sign in successful ', success);
+                res.status(200).send('Sign in successful');
+              } 
+            })
+            .catch(function(err) {
+              console.log('postSigning: getUser sign in not successful ', err);
+              res.status(401).send('invalid email/password combination');
+            })
         } else {
-          res.status(401).send('incorrect username or email');
+          console.log('postSignin: getUser returns invalid login');
+          res.status(401).send('invalid email/password combination');
         }
       })
       .catch(function(err){
-        console.log('There was an error calling db.getUsers from postSignin for user: ' + username, err);
+        console.log('There was an error calling db.getUser from postSignin for user: ');
         res.status(500).send();
       });
   },
@@ -109,7 +121,7 @@ module.exports = {
     var funFact = req.body.funFact;
     var profileImage = req.body.profileImage;
 
-    db.addUser(name, email, password, funFact, profileImage)
+    return db.addUser(name, email, password, funFact, profileImage)
       .then(function(user){
         res.status(201).send('User Create!');
       })

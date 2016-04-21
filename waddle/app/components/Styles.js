@@ -187,6 +187,10 @@ module.exports = StyleSheet.create({
   map: {
     height: 360
   },
+  error: {
+        color: 'red',
+        paddingTop: 10
+    }
 
 });
 

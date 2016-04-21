@@ -64,7 +64,7 @@ class Main extends Component{
       email: '',
       password: '',
       showProgress: false,
-      error: false
+      error: null
     };
   }
 
@@ -81,6 +81,7 @@ class Main extends Component{
   }
 
   handleGoToSignup() {
+    console.log('current routes: ', this.props.navigator.getCurrentRoutes());
     this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
     this.props.navigator.push({
       title: 'Signup',
@@ -226,7 +227,7 @@ class Main extends Component{
 
           <TouchableHighlight
             style={styles.signupButton}
-            onPress={this.handleGoToSignup()}
+            onPress={this.handleGoToSignup.bind(this)}
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign up</Text>
           </TouchableHighlight>

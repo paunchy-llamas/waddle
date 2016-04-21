@@ -19,7 +19,7 @@ class AuthService {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              username: creds.username,
+              email: creds.email,
               password: creds.password
             })
         })

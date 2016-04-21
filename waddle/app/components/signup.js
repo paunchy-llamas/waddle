@@ -67,7 +67,10 @@ class Signup extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: this.props.username
+        firstName: this.state.firstName,
+        email: this.state.email,
+        password: this.state.password,
+        funFact: this.state.funFact
       })
     })
     .then(function(res){

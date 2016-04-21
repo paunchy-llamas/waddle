@@ -9,6 +9,7 @@ var userSchema = mongoose.Schema({
   password: String,
   funFact: String,
   profileImage: String,
+  phoneNumber: String,
   matches: { type: Number, default: 0 },
   averageRating: { type: Number, default: 0 }
 });

@@ -41,7 +41,6 @@
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
 var styles = require('./Styles');
-// var CookieManager = require('react-native-cookies');
 
 var {
   View,
@@ -68,14 +67,6 @@ class Main extends Component{
       // error: null
     };
   }
-
-  // checkForExistingCookie() {
-  //   // Get cookies as a request header string
-  //   CookieManager.get('/', (err, res) => {
-  //     console.log('Got cookies for url', res);
-  //     // Outputs 'user_session=abcdefg; path=/;'
-  //   })
-  // }
 
   handleChangeEmail(e) {
     this.setState({

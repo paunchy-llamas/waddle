@@ -15,6 +15,14 @@ var {
   Linking
 } = React;
 
+
+var TwilioKeys = {
+  account_sid: 'AC343542f9430e1cd0f97f0b57cd4d44af',
+  auth_token: 'bedd2a8a3c581bacee9a4be24c31835c'
+}
+
+
+
 var Match = require('./match');
 var styles = require('./Styles');
 var api = require('../utils/api');
@@ -42,7 +50,37 @@ class Results extends Component{
     }, 2000);
   }
 
+
+
+  sendTwilioText(){
+    console.log('you did it, you pushed the send Twilio text button');
+
+    var url = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: "To=+18016913092&From=+14353154197&Body=Whatever"
+    })
+    .then(function(res) {
+      if (res.ok) {
+        console.log("Perfect! Your settings are saved.");
+      } else if (res.status === 401) {
+        console.log("Oops! You are not authorized.");
+      }
+    }, function(e) {
+      console.log("Error submitting form!");
+    })
+    .catch(function(err) {
+      console.log('in sendTwilioText catch block');
+    });
+  }
+
+
+
   submitHandler(){
+    this.sendTwilioText();
     this.props.navigator.push({
       title: 'Match made!',
       component: Match,
@@ -72,9 +110,9 @@ class Results extends Component{
     console.log('here is the restaurant info from server: ', this.props.restaurant);
     return (
       <View style={styles.mapContainer}>
-        <MapView 
+        <MapView
         showsUserLocation={true}
-        // followUserLocation={true} 
+        // followUserLocation={true}
         // even though default is true, must manually set followUserLocation to get autozoom
         region={this.state.coordinates}
         maxDelta={0.15}

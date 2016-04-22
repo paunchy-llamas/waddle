@@ -123,7 +123,7 @@ class Signup extends Component {
   handlePasswordChange(e) {
     this.setState({
       password: e.nativeEvent.text
-    }
+    })
   }
 
   handlePhoneChange(e) {
@@ -170,17 +170,10 @@ class Signup extends Component {
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
-          placeholder='Fun fact about yourself'
+          placeholder='Receive text when match arrives'
           placeholderTextColor={placeholderColor}
-          onChange={this.handleFunFactChange.bind(this)}/>
-        <TextInput
-          style={styles.textInput}
-          autoCapitalize='none'
-          autoCorrect={false}
-          placeholder='Phone'
-          placeholderTextColor={placeholderColor}
-          onChange={this.handlePhoneChange.bind(this)}/>
-        <TouchableHighlight
+          onChange={this.handlePhoneChange.bind(this)} />
+        <TouchableHighlight>
           style={styles.button}
           onPress={this.handleNewUser.bind(this)}
           underlayColor="#f9ecdf">

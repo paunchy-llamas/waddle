@@ -87,9 +87,10 @@ class Main extends Component{
       title: 'Signup',
       component: Signup,
     });
-  
+
   }
 
+<<<<<<< fe8041a6af6bb7a0ef4bef75485ce1c69a5a05ef
   onLoginPress(){
     console.log('Attempting to log in with username ' + this.state.email);
     this.setState({showProgress: true});
@@ -125,13 +126,12 @@ class Main extends Component{
                   username: user.username,
                   firstName: user.firstName,
                   funFact: user.funFact,
-                  email: user.email
+                  email: user.email,
+                  phone: user.phone
                 }
               });
-            }.bind(this));
-
             // make it impossible to go back to sign in screen
-            // passProps: {userInfo: res} 
+            // passProps: {userInfo: res}
             // should pass user ID, other details as received from OAuth
           }.bind(this));
         } else if (results.badCredentials) {
@@ -186,7 +186,7 @@ class Main extends Component{
   //         }.bind(this));
 
   //         // make it impossible to go back to sign in screen
-  //         // passProps: {userInfo: res} 
+  //         // passProps: {userInfo: res}
   //         // should pass user ID, other details as received from OAuth
   //       }.bind(this));
   //     } else if (isInvalid) {
@@ -250,7 +250,7 @@ class Main extends Component{
             placeholderTextColor='white'
             onChange={this.handleChangePassword.bind(this)}
           />
-          
+
           <TouchableHighlight
             style={styles.button}
             onPress={this.onLoginPress.bind(this)}

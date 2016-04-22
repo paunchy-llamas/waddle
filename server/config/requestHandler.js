@@ -17,6 +17,7 @@ var firstMatchedUser = {"firstName":"Nathan",
 "username":"Nathaniel",
 "averageRating": 3.5,
 "email":"nedwards@gmail.com",
+"phone":"8016728323",
 "funFact":"I can code all the things",
 "testprofileImage":"https://avatars1.githubusercontent.com/u/5132757?v=3&s=400"
 };
@@ -121,6 +122,7 @@ module.exports = {
     var name = req.body.firstName;
     var username = req.body.username;
     var email = req.body.email;
+    var phone = req.body.phone;
     var password = req.body.password;
     var funFact = req.body.funFact;
     var profileImage = req.body.profileImage;

@@ -17,7 +17,7 @@ var firstMatchedUser = {"firstName":"Nathan",
 "username":"Nathaniel",
 "averageRating": 3.5,
 "email":"nedwards@gmail.com",
-"phone":"8016728323",
+"phone":"8016913092",
 "funFact":"I can code all the things",
 "testprofileImage":"https://avatars1.githubusercontent.com/u/5132757?v=3&s=400"
 };
@@ -328,8 +328,8 @@ module.exports = {
     db.getUserByEmail(email)
       .then(function(users) {
         var user = users[0];
-        console.log(users);
-        res.setHeader('userInfo', JSON.stringify(users));
+        console.log(users, user);
+        res.setHeader('userInfo', JSON.stringify(users)); // stringify user?
         res.status(200).json(users[0]);
       })
       .catch(function(error) {

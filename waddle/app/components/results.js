@@ -55,26 +55,41 @@ class Results extends Component{
   sendTwilioText(){
     console.log('you did it, you pushed the send Twilio text button');
 
-    var url = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: "To=+18016913092&From=+14353154197&Body=Whatever"
-    })
-    .then(function(res) {
-      if (res.ok) {
-        console.log("Perfect! Your settings are saved.");
-      } else if (res.status === 401) {
-        console.log("Oops! You are not authorized.");
-      }
-    }, function(e) {
-      console.log("Error submitting form!");
-    })
-    .catch(function(err) {
-      console.log('in sendTwilioText catch block');
-    });
+    var twilioUrl = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
+    var toPhone = '+18016913092';
+    // var dbFindUserUrl = `/users/${this.props.match.username}`;
+
+    // fetch(dbFindUserUrl, {
+    //   method: 'GET',
+    //   headers: {  'Content-Type': 'application/json' }
+    // })
+    // .then(function(res) {
+
+    //   console.log('Result of db lookup on match', res);
+
+      fetch(twilioUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `To=${ toPhone }&From=+14353154197&Body=Whatever`
+      })
+        .then(function(res) {
+          if (res.ok) {
+            console.log("Perfect! Your settings are saved.");
+          } else if (res.status === 401) {
+            console.log("Oops! You are not authorized.");
+          }
+        }, function(e) {
+          console.log("Error submitting form!");
+        })
+        .catch(function(err) {
+          console.log('in sendTwilioText catch block');
+        });
+    // }, function(err) {
+    //   console.log("Error making db call");
+    // }.bind(this));
+
   }
 
 

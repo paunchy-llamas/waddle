@@ -127,11 +127,7 @@ module.exports = {
     var funFact = req.body.funFact;
     var profileImage = req.body.profileImage;
 
-<<<<<<< fe8041a6af6bb7a0ef4bef75485ce1c69a5a05ef
     db.addUser(name, username, email, phone, funFact, profileImage)
-=======
-    db.addUser(username, email, phone, password, funFact, profileImage)
->>>>>>> A couple more minor tweaks to add phone props, hopefully complete now
       .then(function(user){
         res.status(201).send('User Create!');
       })

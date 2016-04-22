@@ -5,11 +5,8 @@ var Promise = require('bluebird');
 var userSchema = mongoose.Schema({
   firstName: String,
   email: String,
-<<<<<<< 625e135a2c8c7cdc86786054820835995cf9364c
   username: String,
-=======
   phone: String,
->>>>>>> A tweak to adding phone props
   password: String,
   funFact: String,
   profileImage: String,

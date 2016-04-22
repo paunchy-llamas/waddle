@@ -173,11 +173,11 @@ class Signup extends Component {
           placeholder='Fun fact about yourself'
           placeholderTextColor={placeholderColor}
           onChange={this.handleFunFactChange.bind(this)}/>
-          <TextInput
+        <TextInput
           style={styles.textInput}
           autoCapitalize='none'
           autoCorrect={false}
-          placeholder={'Phone'}
+          placeholder='Phone'
           placeholderTextColor={placeholderColor}
           onChange={this.handlePhoneChange.bind(this)}/>
         <TouchableHighlight

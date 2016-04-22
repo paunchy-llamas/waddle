@@ -104,7 +104,7 @@ module.exports = {
               if (success) {
                 console.log('postSignin: getUser sign in successful ', success);
                 res.status(200).send('sign in successful');
-              } 
+              }
             })
             .catch(function(err) {
               console.log('postSignin: password incorrect ', err);
@@ -127,7 +127,7 @@ module.exports = {
     var funFact = req.body.funFact;
     var profileImage = req.body.profileImage;
 
-    return db.addUser(name, username, email, password, funFact, profileImage)
+    db.addUser(name, username, email, phone, funFact, profileImage)
       .then(function(user){
         res.status(201).send('User Create!');
       })
@@ -329,6 +329,8 @@ module.exports = {
 
   getProfilePhoto: function(req, res) {
     var username = req.params.username.toLowerCase();
+    console.log(username);
+    var file = username + '_' + 'profile.jpg'; // profile image name
 
     db.getUsersByUsername(username)
       .then(function(users) {
@@ -354,6 +356,8 @@ module.exports = {
         console.log('There was an error calling db.getUserByEmail from getProfilePhoto: ', error);
         res.status(500).send();
       });
+
+    // console.log('COMMENTED OUT REQUESTHANDLER > GET PROFILE PHOTO IN HOPES THAT STOPS SERVER CRASHES');
   },
 
   upload: function(req, res) {
@@ -377,15 +381,20 @@ module.exports = {
       var phone = fields.phone;
       var fileName = files.photo.path.replace('server/uploads/', '');
 
+      // TEMPORARILY CHANGE NEWINFO.PROFILEIMAGE SINCE IT'S NOT SAVING TO UPLOADS FOLDER
+      // (OR SOME OTHER REASON THERE'S AN ERROR SAYING 'NO SUCH FILE OR DIRECTORY')
+
       var newInfo = {
         username: username,
-        profileImage: fileName,
+        // profileImage: fileName,
         firstName: firstName,
         funFact: funFact,
         email: email,
         phone: phone
       };
 
+      // SAME TEMPORARY CHANGE
+      newInfo.profileImage = "https://avatars1.githubusercontent.com/u/5132757?v=3&s=400";
 
       db.updateUser(username, newInfo)
         .then(function(user){

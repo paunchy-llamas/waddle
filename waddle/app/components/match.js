@@ -35,7 +35,7 @@ class Match extends Component{
     console.log('match information: ', this.props.match);
     return (
       <View style={styles.mainContainer}>
-        <Image 
+        <Image
         source={{uri: imageLink}}
         onLoadEnd={()=>{console.log('image actually loaded, so........')}}
         style={styles.image}

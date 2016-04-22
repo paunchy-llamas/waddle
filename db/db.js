@@ -77,13 +77,21 @@ exports.db = {
     });
   },
 
+<<<<<<< fe8041a6af6bb7a0ef4bef75485ce1c69a5a05ef
   addUser: function(firstName, username, email, password, phone, funFact, profileImage) {
+=======
+  addUser: function(username, email, phone, password, funFact, profileImage) {
+>>>>>>> A couple more minor tweaks to add phone props, hopefully complete now
     var newDbEntry = {
       firstName: firstName,
       username: username,
       email: email,
       phone: phone,
       password: password,
+<<<<<<< fe8041a6af6bb7a0ef4bef75485ce1c69a5a05ef
+=======
+      firstName: "Adam",
+>>>>>>> A couple more minor tweaks to add phone props, hopefully complete now
       funFact: funFact,
       profileImage: profileImage
     };

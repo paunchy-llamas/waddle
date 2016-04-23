@@ -5,7 +5,6 @@
 
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
-var TwilioKeys = require('./../clientKeys/twiliokeys.js');
 
 var {
   Component,
@@ -20,9 +19,9 @@ var {
 
 var Match = require('./match');
 var styles = require('./Styles');
-var api = require('../utils/api');
-var Messenger = require('./Messenger');
-var Firebase = require('firebase');
+// var api = require('../utils/api');
+// var Messenger = require('./Messenger');
+// var Firebase = require('firebase');
 
 class Results extends Component{
   constructor(props) {
@@ -48,6 +47,10 @@ class Results extends Component{
 
   sendTwilioText(){
     console.log('you did it, you pushed the send Twilio text button');
+
+
+    var TwilioKeys = require('./../clientKeys/twiliokeys.js');
+
 
     var twilioUrl = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
     var dbFindUserUrl = `/users/${this.props.match.username}`;

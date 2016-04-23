@@ -60,15 +60,15 @@ class Results extends Component{
     var dbFindUserUrl = `/users/${this.props.match.username}`;
     console.log('dbFindUserUrl is', dbFindUserUrl);
 
-    fetch('/users/afsd', {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json'
-      }
-    })
-    .then(function(res) {
+    // fetch('/users/afsd', {
+    //   method: 'GET',
+    //   headers: {
+    //       'Content-Type': 'application/json'
+    //   }
+    // })
+    // .then(function(res) {
 
-      console.log('Result of db lookup on match', res);
+    //   console.log('Result of db lookup on match', res);
 
 
 
@@ -95,9 +95,9 @@ class Results extends Component{
 
 
 
-    }, function(err) {
-      console.log("Error making db call");
-    }.bind(this));
+    // }, function(err) {
+    //   console.log("Error making db call");
+    // }.bind(this));
 
 
 

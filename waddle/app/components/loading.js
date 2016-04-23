@@ -59,7 +59,8 @@ class Loading extends Component{
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
           username: this.props.username,
-          lunchOrCoffee: this.props.lunchOrCoffee
+          lunchOrCoffee: this.props.lunchOrCoffee,
+          phone: this.props.phone
         }
       })
         .catch((err) => {

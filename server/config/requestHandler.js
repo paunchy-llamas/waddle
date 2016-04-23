@@ -159,6 +159,7 @@ module.exports = {
     var requestType = req.headers.requesttype;
     var lunchOrCoffee = req.headers.lunchorcoffee;
     var timestamp = (new Date()).toString();
+    var phone = req.headers.phone;
 
     console.log('---------------------------------------');
     console.log('Received match request with options....');
@@ -168,6 +169,7 @@ module.exports = {
     console.log('longitude', longitude);
     console.log('lunch or coffee?', lunchOrCoffee);
     console.log('timestamp', timestamp);
+    console.log('phone number', phone);
     console.log('---------------------------------------');
 
     // Send 400 if headers not provided
@@ -247,7 +249,7 @@ module.exports = {
                     }
                   });
                 } else {
-                  var newMatchRequest = new MatchRequest({ username: username, latitude: latitude, longitude: longitude, lunchOrCoffee: lunchOrCoffee });
+                  var newMatchRequest = new MatchRequest({ username: username, latitude: latitude, longitude: longitude, lunchOrCoffee: lunchOrCoffee, phone: phone });
                   newMatchRequest.save(function(error) {
                     if (error) {
                       console.log('Could not save user to MatchRequest table: ' + username, error);

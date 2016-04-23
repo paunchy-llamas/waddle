@@ -58,14 +58,14 @@ class Results extends Component{
 
     var twilioUrl = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
     // var toPhone = '+18016913092'; // THE PHONE # WOULD HAVE TO BE FORM-VALIDATED, THEN CONCATTED WITH +1
-    var dbFindUserUrl = '/users/Nathaniel';//`/users/${this.props.match.username}`;
+    var dbFindUserUrl = '/users/Nathaniel'; //`/users/${this.props.match.username}`; //'/users/ada';//
     console.log('dbFindUserUrl is', dbFindUserUrl);
 
     fetch(`${IP_address}${dbFindUserUrl}`)
     .then(function(res){
-      console.log("result of /users/Nathaniel fetch:", res);
+      console.log("result of /users/{matchsusername} fetch:", res);
       console.log('specifically, the user is:', res.headers.map.userinfo[0]);
-      var toPhone = JSON.parse(res.headers.map.userinfo[0]).phone;
+      var toPhone = "+1" + JSON.stringify( JSON.parse(res.headers.map.userinfo[0]).phone );
       console.log("And their phone number is...", toPhone, 'which is type', typeof toPhone);
 
       fetch(twilioUrl, {
@@ -90,7 +90,7 @@ class Results extends Component{
 
     })
     .catch(function(err){
-      console.log("didn't get stuff from fetch /users/Nathaniel because:", err);
+      console.log("didn't get stuff from fetch /users/{matchsusername} because:", err);
     });
 
 

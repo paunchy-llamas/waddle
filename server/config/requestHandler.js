@@ -17,6 +17,7 @@ var firstMatchedUser = {"firstName":"Nathan",
 "username":"Nathaniel",
 "averageRating": 3.5,
 "email":"nedwards@gmail.com",
+"phone":"8016913092",
 "funFact":"I can code all the things",
 "testprofileImage":"https://avatars1.githubusercontent.com/u/5132757?v=3&s=400"
 };
@@ -69,6 +70,7 @@ var getFirstValidMatch = function(username, lunchOrCoffee, matchRequestsArray, u
   console.log('latitude', lat1);
   console.log('longitude', lon1);
   console.log('lunch or coffee: ', lunchOrCoffee);
+  console.log('phone: ', phone);
   console.log('-----------------------');
 
   for (var i = 0; i < matchRequestsArray.length; i++) {
@@ -103,7 +105,7 @@ module.exports = {
               if (success) {
                 console.log('postSignin: getUser sign in successful ', success);
                 res.status(200).send('sign in successful');
-              } 
+              }
             })
             .catch(function(err) {
               console.log('postSignin: password incorrect ', err);
@@ -121,11 +123,12 @@ module.exports = {
     var name = req.body.firstName;
     var username = req.body.username;
     var email = req.body.email;
+    var phone = req.body.phone;
     var password = req.body.password;
     var funFact = req.body.funFact;
     var profileImage = req.body.profileImage;
 
-    return db.addUser(name, username, email, password, funFact, profileImage)
+    db.addUser(name, username, email, phone, funFact, profileImage)
       .then(function(user){
         res.status(201).send('User Create!');
       })
@@ -143,10 +146,10 @@ module.exports = {
      * Client will send a GET request to /match with 4 headers: username, longitude, latitude, requestType
      *      - username is the username string
      *      - longitude/latitude are user's location
-     *      - requestType is should equal either 'request-match' or 'retrieve-match'. 
-     *            >The first request made by the client should have a type of 'request-match'. This will instruct the server to start 
-     *             looking for a match. A '200' response means that the server has received the request and will start searching for a match. 
-     *            > After 60s, the client should send a follow-up request with the type 'retrieve-match'. 
+     *      - requestType is should equal either 'request-match' or 'retrieve-match'.
+     *            >The first request made by the client should have a type of 'request-match'. This will instruct the server to start
+     *             looking for a match. A '200' response means that the server has received the request and will start searching for a match.
+     *            > After 60s, the client should send a follow-up request with the type 'retrieve-match'.
      *              This will instruct the server to return the match, if available.
      */
 
@@ -156,6 +159,7 @@ module.exports = {
     var username = req.headers.username;
     var requestType = req.headers.requesttype;
     var lunchOrCoffee = req.headers.lunchorcoffee;
+    var phone = req.headers.phone;
 
     console.log('---------------------------------------');
     console.log('Received match request with options....');
@@ -164,6 +168,7 @@ module.exports = {
     console.log('latitude', latitude);
     console.log('longitude', longitude);
     console.log('lunch or coffee?', lunchOrCoffee);
+    console.log('phone number', phone);
     console.log('---------------------------------------');
 
     // Send 400 if headers not provided
@@ -179,8 +184,8 @@ module.exports = {
 
           /*
            * Lines 108 through 119 are 'dummy code' that will allow us to pass the unit tests.
-           * This code is necessary because the continuous integration on Travis-CI does not have access to our Foursquare API keys. 
-           * As such, the below vode (i.e., lines 120 onwards) will always fail the unit tests during continuous integration. 
+           * This code is necessary because the continuous integration on Travis-CI does not have access to our Foursquare API keys.
+           * As such, the below vode (i.e., lines 120 onwards) will always fail the unit tests during continuous integration.
            * Although all the code below has not been unit tested, it has been manually tested and is functional.
           */
           if (!foursquare.client_id) {
@@ -241,7 +246,7 @@ module.exports = {
                     }
                   });
                 } else {
-                  var newMatchRequest = new MatchRequest({ username: username, latitude: latitude, longitude: longitude, lunchOrCoffee: lunchOrCoffee });
+                  var newMatchRequest = new MatchRequest({ username: username, latitude: latitude, longitude: longitude, lunchOrCoffee: lunchOrCoffee, phone: phone });
                   newMatchRequest.save(function(error) {
                     if (error) {
                       console.log('Could not save user to MatchRequest table: ' + username, error);
@@ -315,12 +320,29 @@ module.exports = {
     db.getUserByEmail(email)
       .then(function(users) {
         var user = users[0];
-        console.log(users);
-        res.setHeader('userInfo', JSON.stringify(users));
-        res.status(200).json(users[0]);
+        console.log("users:", users, "user:", user);
+        res.setHeader('userInfo', JSON.stringify(user)); // stringify user?
+        res.status(200).json(user);
       })
       .catch(function(error) {
-        console.log('There was an error calling db.getUsersByUsername from getUserInfo: ', error);
+        console.log('There was an error calling db.getUsersByEmail from getUserInfo: ', error);
+        res.status(500).send();
+      });
+  },
+
+  getUserInfoByUsername: function(req, res) {
+    var username = req.params.username;//.toLowerCase();
+    console.log('req.params.username is', req.params.username);
+
+    db.getUsersByUsername(username)
+      .then(function(users) {
+        var user = users[0];
+        console.log("users:", users, "user:", user);
+        res.setHeader('userInfo', JSON.stringify(user)); // stringify user?
+        res.status(200).json(user);
+      })
+      .catch(function(error) {
+        console.log('There was an error calling db.getUsersByUsername from getUserInfoByUsername: ', error);
         res.status(500).send();
       });
   },
@@ -328,7 +350,8 @@ module.exports = {
   getProfilePhoto: function(req, res) {
     var username = req.params.username.toLowerCase();
 
-    db.getUsersByUsername(username)
+    //db.getUsersByUsername(username)
+    db.getUsersByUsername('Nathaniel')
       .then(function(users) {
         console.log(users[0]);
         var file  = users[0].profileImage;
@@ -346,10 +369,10 @@ module.exports = {
             console.log('Sent:', file);
           }
         });
-        
+
       })
       .catch(function(error) {
-        console.log('There was an error calling db.getUserByEmail from getProfilePhoto: ', error);
+        console.log('There was an error calling db.getUserByUsername from getProfilePhoto: ', error);
         res.status(500).send();
       });
   },
@@ -372,16 +395,23 @@ module.exports = {
       var firstName = fields.firstName;
       var funFact = fields.funFact;
       var email = fields.email;
+      var phone = fields.phone;
       var fileName = files.photo.path.replace('server/uploads/', '');
+
+      // TEMPORARILY CHANGE NEWINFO.PROFILEIMAGE SINCE IT'S NOT SAVING TO UPLOADS FOLDER
+      // (OR SOME OTHER REASON THERE'S AN ERROR SAYING 'NO SUCH FILE OR DIRECTORY')
 
       var newInfo = {
         username: username,
-        profileImage: fileName,
+        // profileImage: fileName,
         firstName: firstName,
         funFact: funFact,
-        email: email
+        email: email,
+        phone: phone
       };
 
+      // SAME TEMPORARY CHANGE
+      newInfo.profileImage = "https://avatars1.githubusercontent.com/u/5132757?v=3&s=400";
 
       db.updateUser(username, newInfo)
         .then(function(user){

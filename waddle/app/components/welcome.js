@@ -48,8 +48,8 @@ class Welcome extends Component{
         <Text style={styles.welcomeText}>Welcome, { this.props.firstName || this.props.username}</Text>
         <TouchableHighlight
         onPress={this.takeProfilePic.bind(this)}>
-          <Image 
-            style={styles.avatar} 
+          <Image
+            style={styles.avatar}
             source={{uri: imageLink}} />
         </TouchableHighlight>
         <TouchableHighlight
@@ -64,7 +64,7 @@ class Welcome extends Component{
           underlayColor="#f9ecdf">
           <Text style={styles.buttonText}>gimme a coffee buddy</Text>
         </TouchableHighlight>
-        
+
       </View>
     );
   }

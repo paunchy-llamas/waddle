@@ -51,8 +51,9 @@ class Results extends Component{
     console.log('you did it, you pushed the send Twilio text button');
 
     var twilioUrl = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
-    var toPhone = '+18016913092';
+    var toPhone = '+18016913092'; // THE PHONE # WOULD HAVE TO BE FORM-VALIDATED, THEN CONCATTED WITH +1
     var dbFindUserUrl = `/users/${this.props.match.username}`;
+    console.log('dbFindUserUrl is', dbFindUserUrl);
 
     fetch(dbFindUserUrl, {
       method: 'GET',

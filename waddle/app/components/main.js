@@ -125,7 +125,8 @@ class Main extends Component{
                   username: user.username,
                   firstName: user.firstName,
                   funFact: user.funFact,
-                  email: user.email
+                  email: user.email,
+                  phone: user.phone
                 }
               });
             }.bind(this));

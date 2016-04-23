@@ -5,6 +5,7 @@
 
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
+var TwilioKeys = require('../clientKeys/twilioKeys.js');
 
 var {
   Component,
@@ -15,13 +16,6 @@ var {
   StyleSheet,
   Linking
 } = React;
-
-
-var TwilioKeys = {
-  account_sid: 'AC343542f9430e1cd0f97f0b57cd4d44af',
-  auth_token: 'bedd2a8a3c581bacee9a4be24c31835c'
-}
-
 
 
 var Match = require('./match');
@@ -45,7 +39,6 @@ class Results extends Component{
       })
     }, 2000);
   }
-
 
 
   sendTwilioText(){

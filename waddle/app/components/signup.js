@@ -171,7 +171,7 @@ class Signup extends Component {
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
-          placeholder='Phone (get text when match arrives)'
+          placeholder='Ten-digit phone (no dashes)'
           placeholderTextColor={placeholderColor}
           onChange={this.handlePhoneChange.bind(this)} />
         <TextInput

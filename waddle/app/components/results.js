@@ -55,9 +55,11 @@ class Results extends Component{
     var dbFindUserUrl = `/users/${this.props.match.username}`;
     console.log('dbFindUserUrl is', dbFindUserUrl);
 
-    fetch(dbFindUserUrl, {
+    fetch('/users/afsd', {
       method: 'GET',
-      headers: {  'Content-Type': 'application/json' }
+      headers: {
+          'Content-Type': 'application/json'
+      }
     })
     .then(function(res) {
 

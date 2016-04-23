@@ -30,16 +30,19 @@ class Match extends Component{
   }
 
   render(){
-    var imageLink = this.props.match.testprofileImage || `${IP_address}/users/${this.props.match.username}/profilePhoto?$date={Date.now()}`;
+
+    var imageLink = `${IP_address}/users/${this.props.match.username}/profilePhoto?$date={Date.now()}`;
     console.log('match.js link to image: ', imageLink);
     console.log('match information: ', this.props.match);
-    return (
-      <View style={styles.mainContainer}>
-        <Image
+      <Image
         source={{uri: imageLink}}
         onLoadEnd={()=>{console.log('image actually loaded, so........')}}
         style={styles.image}
-        />
+        >
+
+    return (
+      <View style={styles.mainContainer}>
+
         <Text style={styles.title}>Here's your match!</Text>
         <Text style={styles.resultsText}>First Name: {this.props.match.firstName}</Text>
         <Text style={styles.resultsText}>Fun Fact: {this.props.match.funFact}</Text>

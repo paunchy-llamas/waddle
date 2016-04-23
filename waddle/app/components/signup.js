@@ -26,7 +26,7 @@ class Signup extends Component {
       email: '',
       password: '',
       funFact: '',
-      phone: '',
+      phone: 0,
       keyboardOffset: new Animated.Value(0),
       error: false
     };
@@ -107,7 +107,6 @@ class Signup extends Component {
       username: e.nativeEvent.text
     });
   }
-
 
   handleFunFactChange(e) {
     this.setState({

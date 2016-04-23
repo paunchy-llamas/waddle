@@ -50,7 +50,7 @@ class Results extends Component{
     console.log('you did it, you pushed the send Twilio text button');
 
     var twilioUrl = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
-    var dbFindUserUrl = `/users/${this.props.match.username}`;
+    var dbFindUserUrl = '/users/Nathaniel';//`/users/${this.props.match.username}`;
     console.log('dbFindUserUrl is', dbFindUserUrl);
 
     fetch(`${IP_address}${dbFindUserUrl}`)

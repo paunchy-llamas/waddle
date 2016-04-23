@@ -17,7 +17,7 @@ var firstMatchedUser = {"firstName":"Nathan",
 "username":"Nathaniel",
 "averageRating": 3.5,
 "email":"nedwards@gmail.com",
-"phone":"8016913092",
+"phone": 8016913092,
 "funFact":"I can code all the things",
 "testprofileImage":"https://avatars1.githubusercontent.com/u/5132757?v=3&s=400"
 };

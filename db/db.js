@@ -77,13 +77,12 @@ exports.db = {
     });
   },
 
-  addUser: function(firstName, username, email, password, phone, funFact, profileImage) {
+  addUser: function(firstName, username, email, phone, funFact, profileImage) {
     var newDbEntry = {
       firstName: firstName,
       username: username,
       email: email,
       phone: phone,
-      password: password,
       funFact: funFact,
       profileImage: profileImage
     };

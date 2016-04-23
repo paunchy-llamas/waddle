@@ -332,7 +332,7 @@ module.exports = {
         res.status(200).json(user);
       })
       .catch(function(error) {
-        console.log('There was an error calling db.getUsersByUsername from getUserInfo: ', error);
+        console.log('There was an error calling db.getUsersByEmail from getUserInfo: ', error);
         res.status(500).send();
       });
   },
@@ -348,7 +348,7 @@ module.exports = {
         res.status(200).json(user);
       })
       .catch(function(error) {
-        console.log('There was an error calling db.getUsersByUsername from getUserInfo: ', error);
+        console.log('There was an error calling db.getUsersByUsername from getUserInfoByUsername: ', error);
         res.status(500).send();
       });
   },

@@ -38,7 +38,7 @@ class Match extends Component{
         source={{uri: imageLink}}
         onLoadEnd={()=>{console.log('image actually loaded, so........')}}
         style={styles.image}
-        >
+        />
 
     return (
       <View style={styles.mainContainer}>

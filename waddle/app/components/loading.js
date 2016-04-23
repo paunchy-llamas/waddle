@@ -23,6 +23,7 @@ var styles = require('./Styles');
 class Loading extends Component{
   constructor(props) {
     super(props);
+    // console.log("props in Loading are...", this.props);
     this.state = {
       isLoading: true,
       restaurant: false,

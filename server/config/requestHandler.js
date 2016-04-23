@@ -331,7 +331,8 @@ module.exports = {
   },
 
   getUserInfoByUsername: function(req, res) {
-    var username = req.params.username.toLowerCase();
+    var username = req.params.username;//.toLowerCase();
+    console.log('req.params.username is', req.params.username);
 
     db.getUsersByUsername(username)
       .then(function(users) {
@@ -349,7 +350,8 @@ module.exports = {
   getProfilePhoto: function(req, res) {
     var username = req.params.username.toLowerCase();
 
-    db.getUsersByUsername(username)
+    //db.getUsersByUsername(username)
+    db.getUsersByUsername('Nathaniel')
       .then(function(users) {
         console.log(users[0]);
         var file  = users[0].profileImage;

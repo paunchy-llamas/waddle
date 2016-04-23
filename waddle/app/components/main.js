@@ -91,7 +91,6 @@ class Main extends Component{
   }
 
   onLoginPress(){
-
     console.log('Attempting to log in with username ' + this.state.email);
     this.setState({showProgress: true});
 
@@ -116,8 +115,7 @@ class Main extends Component{
             method: 'GET'
           })
           .then(function(response) {
-            response.json()
-            .then(function(user) {
+            response.json().then(function(user) {
               console.log(user);
               this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().slice(0, -1));
               this.props.navigator.push({
@@ -127,18 +125,16 @@ class Main extends Component{
                   username: user.username,
                   firstName: user.firstName,
                   funFact: user.funFact,
-                  email: user.email,
-                  phone: user.phone
+                  email: user.email
                 }
               });
-            }).bind(this)
-          })
-        }
+            }.bind(this));
+
             // make it impossible to go back to sign in screen
             // passProps: {userInfo: res}
             // should pass user ID, other details as received from OAuth
-        else if (results.badCredentials) {
-          console.log('results:', results);
+          }.bind(this));
+        } else if (results.badCredentials) {
             this.setState({
               error: true
             });
@@ -148,7 +144,7 @@ class Main extends Component{
             });
         }
       });
-  }a
+  }
 
   // handleSubmit(){
   //   console.log('insert OAuth integration here');

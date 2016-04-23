@@ -4,6 +4,8 @@
 // is close enough, or even automatically move on to the next screen).
 
 var React = require('react-native');
+var IP_address = require('../../environment.js').IP_address;
+var TwilioKeys = require('./../clientKeys/twiliokeys.js');
 
 var {
   Component,
@@ -14,6 +16,7 @@ var {
   StyleSheet,
   Linking
 } = React;
+
 
 var Match = require('./match');
 var styles = require('./Styles');
@@ -37,7 +40,60 @@ class Results extends Component{
     }, 2000);
   }
 
+
+  sendTwilioText(){
+    console.log('you did it, you pushed the send Twilio text button');
+
+    var twilioUrl = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
+    var dbFindUserUrl = `/users/${this.props.match.username}`;
+    console.log('dbFindUserUrl is', dbFindUserUrl);
+
+    fetch(`${IP_address}${dbFindUserUrl}`)
+    .then(function(res){
+      console.log("result of /users/{matchsusername} fetch:", res);
+      console.log('specifically, the user is:', res.headers.map.userinfo[0]);
+      var toPhone = "+1" + JSON.stringify( JSON.parse(res.headers.map.userinfo[0]).phone );
+
+      console.log("And their phone number is...", toPhone, 'which is type', typeof toPhone);
+
+      // minimal validation here because client-side form validation is hard in React Native (no time to do)
+      if (toPhone.length === 12) {
+
+        fetch(twilioUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: `To=${ toPhone }&From=+14353154197&Body=Whatever`
+        })
+          .then(function(res) {
+            if (res.ok) {
+              console.log("Perfect! Your settings are saved.");
+            } else if (res.status === 401) {
+              console.log("Oops! You are not authorized.");
+            }
+          }, function(e) {
+            console.log("Error submitting form!");
+          })
+          .catch(function(err) {
+            console.log('in sendTwilioText catch block');
+          });
+
+      }
+
+    })
+    .catch(function(err){
+      console.log("didn't get stuff from fetch /users/{matchsusername} because:", err);
+    });
+
+
+
+  }
+
+
+
   submitHandler(){
+    this.sendTwilioText();
     this.props.navigator.push({
       title: 'Match made!',
       component: Match,
@@ -54,9 +110,9 @@ class Results extends Component{
     console.log('here is the restaurant info from server: ', this.props.restaurant);
     return (
       <View style={styles.mapContainer}>
-        <MapView 
+        <MapView
         showsUserLocation={true}
-        // followUserLocation={true} 
+        // followUserLocation={true}
         // even though default is true, must manually set followUserLocation to get autozoom
         region={this.state.coordinates}
         maxDelta={0.15}

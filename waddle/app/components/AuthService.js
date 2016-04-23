@@ -1,7 +1,7 @@
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
 var AsyncStorage = require('react-native').AsyncStorage;
-var _ = require('lodash');
+//var _ = require('lodash');
 // var buffer = require('buffer');
 // var _ = require('lodash');
 // var bcrypt = require('bcrypt');

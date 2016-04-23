@@ -38,6 +38,25 @@
 //           |Enjoy|
 //           +-----+
 
+
+
+ // <TouchableHighlight
+ //            style={styles.signupButton}
+ //            onPress={this.handleDBTest.bind(this)}
+ //            underlayColor="#f9ecdf">
+ //            <Text style={styles.buttonText}>Get User /af</Text>
+ //          </TouchableHighlight>
+
+ //  handleDBTest() {
+ //    fetch(`${IP_address}/users/af`)
+ //      .then(function(res){
+ //        console.log("result of /users/af fetch:", res);
+ //      })
+ //      .catch(function(err){
+ //        console.log("didn't get stuff from fetch /users/af because:", err);
+ //      });
+ //  }
+
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
 var styles = require('./Styles');
@@ -87,7 +106,7 @@ class Main extends Component{
       title: 'Signup',
       component: Signup,
     });
-  
+
   }
 
   onLoginPress(){
@@ -125,13 +144,14 @@ class Main extends Component{
                   username: user.username,
                   firstName: user.firstName,
                   funFact: user.funFact,
-                  email: user.email
+                  email: user.email,
+                  phone: user.phone
                 }
               });
             }.bind(this));
 
             // make it impossible to go back to sign in screen
-            // passProps: {userInfo: res} 
+            // passProps: {userInfo: res}
             // should pass user ID, other details as received from OAuth
           }.bind(this));
         } else if (results.badCredentials) {
@@ -186,7 +206,7 @@ class Main extends Component{
   //         }.bind(this));
 
   //         // make it impossible to go back to sign in screen
-  //         // passProps: {userInfo: res} 
+  //         // passProps: {userInfo: res}
   //         // should pass user ID, other details as received from OAuth
   //       }.bind(this));
   //     } else if (isInvalid) {
@@ -204,7 +224,6 @@ class Main extends Component{
   //   }.bind(this));
 
   // }
-
 
 
   render(){
@@ -250,7 +269,7 @@ class Main extends Component{
             placeholderTextColor='white'
             onChange={this.handleChangePassword.bind(this)}
           />
-          
+
           <TouchableHighlight
             style={styles.button}
             onPress={this.onLoginPress.bind(this)}
@@ -267,6 +286,7 @@ class Main extends Component{
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign up</Text>
           </TouchableHighlight>
+
         </View>
     )
   }

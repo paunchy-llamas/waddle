@@ -57,15 +57,18 @@ class Results extends Component{
 
     var twilioUrl = `https://${TwilioKeys.account_sid}:${TwilioKeys.auth_token}@api.twilio.com/2010-04-01/Accounts/${TwilioKeys.account_sid}/Messages.json`;
     var toPhone = '+18016913092';
-    // var dbFindUserUrl = `/users/${this.props.match.username}`;
+    var dbFindUserUrl = `/users/${this.props.match.username}`;
 
-    // fetch(dbFindUserUrl, {
-    //   method: 'GET',
-    //   headers: {  'Content-Type': 'application/json' }
-    // })
-    // .then(function(res) {
+    fetch(dbFindUserUrl, {
+      method: 'GET',
+      headers: {  'Content-Type': 'application/json' }
+    })
+    .then(function(res) {
 
-    //   console.log('Result of db lookup on match', res);
+      console.log('Result of db lookup on match', res);
+
+
+
 
       fetch(twilioUrl, {
         method: "POST",
@@ -86,9 +89,14 @@ class Results extends Component{
         .catch(function(err) {
           console.log('in sendTwilioText catch block');
         });
-    // }, function(err) {
-    //   console.log("Error making db call");
-    // }.bind(this));
+
+
+
+    }, function(err) {
+      console.log("Error making db call");
+    }.bind(this));
+
+
 
   }
 

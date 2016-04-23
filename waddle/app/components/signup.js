@@ -72,7 +72,8 @@ class Signup extends Component {
         email: this.state.email,
         username: this.state.username,
         password: this.state.password,
-        funFact: this.state.funFact
+        funFact: this.state.funFact,
+        phone: this.state.phone
       })
     })
     .then(function(res){
@@ -88,7 +89,7 @@ class Signup extends Component {
           username: this.state.username,
           password: this.state.password,
           funFact: this.state.funFact,
-          phone: this.props.phone
+          phone: this.state.phone
         }
       });
     }.bind(this));
@@ -170,10 +171,16 @@ class Signup extends Component {
         <TextInput
           style={styles.textInput}
           autoCapitalize='none'
-          placeholder='Receive text when match arrives'
+          placeholder='Phone (get text when match arrives)'
           placeholderTextColor={placeholderColor}
           onChange={this.handlePhoneChange.bind(this)} />
-        <TouchableHighlight>
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize='none'
+          placeholder='Fun fact about yourself'
+          placeholderTextColor={placeholderColor}
+          onChange={this.handleFunFactChange.bind(this)} />
+        <TouchableHighlight
           style={styles.button}
           onPress={this.handleNewUser.bind(this)}
           underlayColor="#f9ecdf">

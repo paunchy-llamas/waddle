@@ -91,6 +91,7 @@ class Main extends Component{
   }
 
   onLoginPress(){
+
     console.log('Attempting to log in with username ' + this.state.email);
     this.setState({showProgress: true});
 
@@ -137,6 +138,7 @@ class Main extends Component{
             // passProps: {userInfo: res}
             // should pass user ID, other details as received from OAuth
         else if (results.badCredentials) {
+          console.log('results:', results);
             this.setState({
               error: true
             });
@@ -146,7 +148,7 @@ class Main extends Component{
             });
         }
       });
-  }
+  }a
 
   // handleSubmit(){
   //   console.log('insert OAuth integration here');

@@ -70,6 +70,7 @@ var getFirstValidMatch = function(username, lunchOrCoffee, matchRequestsArray, u
   console.log('latitude', lat1);
   console.log('longitude', lon1);
   console.log('lunch or coffee: ', lunchOrCoffee);
+  console.log('phone: ', phone);
   console.log('-----------------------');
 
   for (var i = 0; i < matchRequestsArray.length; i++) {

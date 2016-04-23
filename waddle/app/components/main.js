@@ -38,6 +38,25 @@
 //           |Enjoy|
 //           +-----+
 
+
+
+ // <TouchableHighlight
+ //            style={styles.signupButton}
+ //            onPress={this.handleDBTest.bind(this)}
+ //            underlayColor="#f9ecdf">
+ //            <Text style={styles.buttonText}>Get User /af</Text>
+ //          </TouchableHighlight>
+
+ //  handleDBTest() {
+ //    fetch(`${IP_address}/users/af`)
+ //      .then(function(res){
+ //        console.log("result of /users/af fetch:", res);
+ //      })
+ //      .catch(function(err){
+ //        console.log("didn't get stuff from fetch /users/af because:", err);
+ //      });
+ //  }
+
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
 var styles = require('./Styles');
@@ -207,7 +226,6 @@ class Main extends Component{
   // }
 
 
-
   render(){
 
     var errorCtrl = <View />;
@@ -268,6 +286,7 @@ class Main extends Component{
             underlayColor="#f9ecdf">
             <Text style={styles.buttonText}>Sign up</Text>
           </TouchableHighlight>
+
         </View>
     )
   }

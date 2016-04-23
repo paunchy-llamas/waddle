@@ -11,6 +11,9 @@ module.exports = function (app, express) {
   // Your code will fail if you use it unless you modify
   // requestHandler.getUserInfo to handle the :username case
   // app.get('/users/:username', requestHandler.getUserInfo);
+
+  app.get('/users/:username', requestHandler.getUserInfoByUsername);
+
   app.get('/users/:email', requestHandler.getUserInfo);
   app.post('/upload', requestHandler.upload);
   app.post('/rate', requestHandler.rateUser);

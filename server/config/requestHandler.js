@@ -320,9 +320,25 @@ module.exports = {
     db.getUserByEmail(email)
       .then(function(users) {
         var user = users[0];
-        console.log(users, user);
-        res.setHeader('userInfo', JSON.stringify(users)); // stringify user?
-        res.status(200).json(users[0]);
+        console.log("users:", users, "user:", user);
+        res.setHeader('userInfo', JSON.stringify(user)); // stringify user?
+        res.status(200).json(user);
+      })
+      .catch(function(error) {
+        console.log('There was an error calling db.getUsersByUsername from getUserInfo: ', error);
+        res.status(500).send();
+      });
+  },
+
+  getUserInfoByUsername: function(req, res) {
+    var username = req.params.username.toLowerCase();
+
+    db.getUsersByUsername(username)
+      .then(function(users) {
+        var user = users[0];
+        console.log("users:", users, "user:", user);
+        res.setHeader('userInfo', JSON.stringify(user)); // stringify user?
+        res.status(200).json(user);
       })
       .catch(function(error) {
         console.log('There was an error calling db.getUsersByUsername from getUserInfo: ', error);

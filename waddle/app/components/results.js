@@ -4,6 +4,7 @@
 // is close enough, or even automatically move on to the next screen).
 
 var React = require('react-native');
+var IP_address = require('../../environment.js').IP_address;
 
 var {
   Component,
@@ -55,18 +56,10 @@ class Results extends Component{
     var dbFindUserUrl = `/users/${this.props.match.username}`;
     console.log('dbFindUserUrl is', dbFindUserUrl);
 
-    // fetch('/users/afsd', {
-    //   method: 'GET',
-    //   headers: {
-    //       'Content-Type': 'application/json'
-    //   }
-    // })
-    // .then(function(res) {
-
-    //   console.log('Result of db lookup on match', res);
-
-
-
+    fetch(`${IP_address}/users/af`)
+    .then(function(res){
+      console.log("result of /users/af fetch:", res);
+      console.log('specifically, the user is:', res.headers.map.userinfo[0]);
 
       fetch(twilioUrl, {
         method: "POST",
@@ -87,6 +80,15 @@ class Results extends Component{
         .catch(function(err) {
           console.log('in sendTwilioText catch block');
         });
+
+    })
+    .catch(function(err){
+      console.log("didn't get stuff from fetch /users/af because:", err);
+    });
+
+
+
+
 
 
 

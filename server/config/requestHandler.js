@@ -335,10 +335,7 @@ module.exports = {
   },
 
   getProfilePhoto: function(req, res) {
-    // var username = req.params.username.toLowerCase();
-    var email = req.params.email;
-    console.log(username);
-    var file = username + '_' + 'profile.jpg'; // profile image name
+    var username = req.params.username.toLowerCase();
 
     db.getUsersByUsername(username)
       .then(function(users) {
@@ -364,8 +361,6 @@ module.exports = {
         console.log('There was an error calling db.getUserByUsername from getProfilePhoto: ', error);
         res.status(500).send();
       });
-
-    // console.log('COMMENTED OUT REQUESTHANDLER > GET PROFILE PHOTO IN HOPES THAT STOPS SERVER CRASHES');
   },
 
   upload: function(req, res) {

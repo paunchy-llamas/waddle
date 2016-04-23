@@ -44,15 +44,14 @@ class Match extends Component{
 
   render(){
 
-   //var imageLink = `${IP_address}/users/${this.props.match.username}/profilePhoto?$date={Date.now()}`;
-   // console.log('match.js link to image: ', imageLink);
+   var imageLink = `${IP_address}/users/${this.props.match.username}/profilePhoto?$date={Date.now()}`;
+   console.log('match.js link to image: ', imageLink);
    console.log('match information: ', this.props.match);
-
 
     return (
       <View style={styles.mainContainer}>
         <Image
-          source={{uri: "https://i.ytimg.com/vi/x6VgzTsToyY/hqdefault.jpg"}}
+          source={{uri: imageLink}}
           onLoadEnd={()=>{console.log('image actually loaded, so........')}}
           style={styles.image}
          />

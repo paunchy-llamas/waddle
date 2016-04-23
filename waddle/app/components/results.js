@@ -58,42 +58,38 @@ class Results extends Component{
       console.log("result of /users/{matchsusername} fetch:", res);
       console.log('specifically, the user is:', res.headers.map.userinfo[0]);
       var toPhone = "+1" + JSON.stringify( JSON.parse(res.headers.map.userinfo[0]).phone );
+
       console.log("And their phone number is...", toPhone, 'which is type', typeof toPhone);
 
-      fetch(twilioUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `To=${ toPhone }&From=+14353154197&Body=Whatever`
-      })
-        .then(function(res) {
-          if (res.ok) {
-            console.log("Perfect! Your settings are saved.");
-          } else if (res.status === 401) {
-            console.log("Oops! You are not authorized.");
-          }
-        }, function(e) {
-          console.log("Error submitting form!");
+      // minimal validation here because client-side form validation is hard in React Native (no time to do)
+      if (toPhone.length === 12) {
+
+        fetch(twilioUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: `To=${ toPhone }&From=+14353154197&Body=Whatever`
         })
-        .catch(function(err) {
-          console.log('in sendTwilioText catch block');
-        });
+          .then(function(res) {
+            if (res.ok) {
+              console.log("Perfect! Your settings are saved.");
+            } else if (res.status === 401) {
+              console.log("Oops! You are not authorized.");
+            }
+          }, function(e) {
+            console.log("Error submitting form!");
+          })
+          .catch(function(err) {
+            console.log('in sendTwilioText catch block');
+          });
+
+      }
 
     })
     .catch(function(err){
       console.log("didn't get stuff from fetch /users/{matchsusername} because:", err);
     });
-
-
-
-
-
-
-
-    // }, function(err) {
-    //   console.log("Error making db call");
-    // }.bind(this));
 
 
 

@@ -5,7 +5,7 @@
 
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
-var TwilioKeys = require('../clientKeys/twilioKeys.js');
+var TwilioKeys = require('./../clientKeys/twiliokeys.js');
 
 var {
   Component,

@@ -56,11 +56,11 @@ class Selfie extends Component{
           type="front"
           aspect={Camera.constants.Aspect.fill}
           captureTarget={Camera.constants.CaptureTarget.disk}>
-          <TouchableHighlight 
-            style={styles.capture} 
+          <TouchableHighlight
+            style={styles.capture}
             onPress={this.takePicture.bind(this)}
             underlayColor="#f9ecdf">
-            <Image 
+            <Image
               source={require('../assets/glyphicon-camera.png')}
             />
           </TouchableHighlight>
@@ -89,7 +89,8 @@ class Selfie extends Component{
         username: this.props.username,
         firstName: this.props.firstName,
         funFact: this.props.funFact,
-        email: this.props.email
+        email: this.props.email,
+        phone: this.props.phone
       }
     });
   }

@@ -16,13 +16,13 @@ exports.db = {
         if (error) {
           console.log('ERROR calling getUsers function', error);
           reject(error);
-        } 
+        }
 
         if (user.length === 0) {
           reject('invalid email/password combination');
         } else {
           resolve(user);
-        } 
+        }
       });
     });
   },
@@ -34,13 +34,13 @@ exports.db = {
         if (error) {
           console.log('ERROR calling getUsers function', error);
           reject(error);
-        } 
+        }
 
         if (user.length === 0) {
           reject('user not found');
         } else {
           resolve(user);
-        } 
+        }
       });
     });
   },
@@ -77,12 +77,12 @@ exports.db = {
     });
   },
 
-  addUser: function(firstName, username, email, password, funFact, profileImage) {
+  addUser: function(firstName, username, email, phone, funFact, profileImage) {
     var newDbEntry = {
       firstName: firstName,
       username: username,
       email: email,
-      password: password,
+      phone: phone,
       funFact: funFact,
       profileImage: profileImage
     };

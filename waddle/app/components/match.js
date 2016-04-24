@@ -2,6 +2,19 @@
 // match's name and fun fact. There is a button to indicate that you've found your match, which takes you
 // to an icebreaker / enjoy your lunch screen.
 
+//`${IP_address}/users/${this.props.match.username}/profilePhoto?$date={Date.now()}`;
+
+// var imageLink = this.props.match.testProfileImage || `${IP_address}/users/${this.props.match.username}/profilePhoto?$date={Date.now()}`;
+// console.log('match.js link to image: ', imageLink);
+// console.log('match information: ', this.props.match);
+  // <Image
+  //   source={{uri: imageLink}}
+  //   onLoadEnd={()=>{console.log('image actually loaded, so........')}}
+  //   style={styles.image}
+  //   />
+
+// this.props.match.testProfileImage ||
+
 var React = require('react-native');
 var IP_address = require('../../environment.js').IP_address;
 var Enjoy = require('./enjoy');
@@ -30,17 +43,19 @@ class Match extends Component{
   }
 
   render(){
-    var imageLink = this.props.match.testprofileImage || `${IP_address}/users/${this.props.match.username}/profilePhoto?$date={Date.now()}`;
-    console.log('match.js link to image: ', imageLink);
-    console.log('match information: ', this.props.match);
+
+   var imageLink = `${IP_address}/users/${this.props.match.username}/profilePhoto?$date={Date.now()}`;
+   console.log('match.js link to image: ', imageLink);
+   console.log('match information: ', this.props.match);
+
     return (
       <View style={styles.mainContainer}>
-        <Image 
-        source={{uri: imageLink}}
-        onLoadEnd={()=>{console.log('image actually loaded, so........')}}
-        style={styles.image}
-        />
-        <Text style={styles.title}>Here's your match!</Text>
+        <Image
+          source={{uri: imageLink}}
+          onLoadEnd={()=>{console.log('image actually loaded, so........')}}
+          style={styles.image}
+         />
+        <Text style={styles.title}>Heres your match!</Text>
         <Text style={styles.resultsText}>First Name: {this.props.match.firstName}</Text>
         <Text style={styles.resultsText}>Fun Fact: {this.props.match.funFact}</Text>
         <TouchableHighlight

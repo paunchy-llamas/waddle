@@ -14,7 +14,7 @@ module.exports = function (app, express) {
 
   app.get('/users/:username', requestHandler.getUserInfoByUsername);
 
-  // app.get('/users/:email', requestHandler.getUserInfo);
+  app.get('/users/comm/:email', requestHandler.getUserInfo);
   app.post('/upload', requestHandler.upload);
   app.post('/rate', requestHandler.rateUser);
 

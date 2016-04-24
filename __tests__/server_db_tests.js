@@ -161,11 +161,11 @@ describe('Matching algo functionality', () => {
 });
 
 describe('Username endpoint functionality', () => {
-  it('Should respond to requests made to the /users/:email endpoint when the email is valid', (done) => {
-    request.get('http://127.0.0.1:8000/users/test@test.com', (error, response, body) => {
+  it('Should respond to requests made to the /users/comm/:email endpoint when the email is valid', (done) => {
+    request.get('http://127.0.0.1:8000/users/comm/test@test.com', (error, response, body) => {
       if(error) {
         expect(true).toEqual(false);
-        console.log('Error sending GET request to /users/:email', error);
+        console.log('Error sending GET request to /users/comm/:email', error);
         done();
       } else {
         body = JSON.parse(body);
@@ -175,11 +175,11 @@ describe('Username endpoint functionality', () => {
       }
     });
   });
-  it('Should not respond made to the /users/:email endpoint when the email is invalid', (done) => {
-    request.get('http://127.0.0.1:8000/users/arglebargle@nonexistent.com', (error, response, body) => {
+  it('Should not respond made to the /users/comm/:email endpoint when the email is invalid', (done) => {
+    request.get('http://127.0.0.1:8000/users/comm/arglebargle@nonexistent.com', (error, response, body) => {
       if (error) {
         expect(response.statusCode).toEqual(500);
-        console.log('Error sending GET request to /users/:email', error);
+        console.log('Error sending GET request to /users/comm/:email', error);
         done();
       } else {
         expect(body.username).toBeUndefined();

@@ -427,7 +427,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-
+						DevelopmentTeam = B5UW6XN333;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -754,8 +754,7 @@
 				INFOPLIST_FILE = penguin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.waddle.auth;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.waddle.123;
 				PRODUCT_NAME = waddle;
 				PROVISIONING_PROFILE = "";
 			};
@@ -785,9 +784,7 @@
 				INFOPLIST_FILE = penguin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.waddle.auth;
-
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.waddle.123;
 				PRODUCT_NAME = waddle;
 				PROVISIONING_PROFILE = "";
 			};

@@ -1,14 +1,14 @@
+// var env = 'production';
 var env = require('./env.js');
+console.log('Node environment is... ', env)
 
+// this file specifies the address to the app server serving http requests
 var _Environments = {
   development: {
-
-      IP_address: 'http://10.6.30.206:8000'
-      // IP_address: 'http://localhost:8000'
-
+      IP_address: 'http://localhost:8000'
   }, 
   production: {
-      IP_address: 'http://159.203.254.178:8000'
+      IP_address: 'https://waddlingllama.herokuapp.com'
   }
 };
 

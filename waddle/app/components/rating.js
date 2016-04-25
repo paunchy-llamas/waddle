@@ -15,7 +15,7 @@ class Rating extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      feeback: ' ',
+      feeback: '',
       rated: false,
       starsTopOffset: props.match.averageRating * 2 * -40
     };
@@ -94,7 +94,7 @@ class Rating extends Component{
           <Text style={styles.buttonText}>Submit Rating</Text>
         </TouchableHighlight>
 
-        <Text style={styles.feedbackText}>{this.state.feedback}</Text>
+        <Text style={styles.feedbackText}>{this.state.feedback || '\n\n'}</Text>
       </View>
     )
   }

@@ -32,12 +32,11 @@ module.exports = StyleSheet.create({
     backgroundColor: '#424D73'
   },
   title: {
-    marginBottom: 20,
     fontSize: 26,
     textAlign: 'center',
     fontFamily: 'Raleway-Bold',
     color: 'white',
-    padding: 20,
+    padding: 10,
     backgroundColor: 'transparent',
   },
   mainTitle: {

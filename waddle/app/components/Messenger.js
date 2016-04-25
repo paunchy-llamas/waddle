@@ -18,21 +18,12 @@ class Messenger extends React.Component {
     super(props);
     this.state = {
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
-      //message: '',
-      error: ''
+      message: '',
+      error: '',
+      db: new Firebase(`https://native-messenger.firebaseio.com/${this.props.dbNameTimestamp}`)
     };
-    
-    console.log('userLeft: ', this.props.userLeft);
-    console.log('userRight.username: ', this.props.userRight);
-
-    var timestamp = this.props.dbNameTimestamp;
-    console.log('timestamp: ', timestamp);
-
-    var dbNameChat = timestamp;
-    console.log('dbNameChat: ', dbNameChat);
-    
-    this.db = new Firebase(`https://native-messenger.firebaseio.com/${dbNameChat}`);
   }
+
   listenForMessages(db) {
     db.on('value', (snap) => {
       var messages = [];
@@ -48,37 +39,42 @@ class Messenger extends React.Component {
       });
     });
   }
+
   componentDidMount() {
-    this.listenForMessages(this.db);
+    this.listenForMessages(this.state.db);
   }
-  handleChange(e){
-    this.setState({
-      message: e.nativeEvent.text
-    });
+
+  handleChange(text){
+    this.setState({message: text});
   }
+
   handleSubmit(){
-    var message = this.state.message;
+    var message = this.state.message.trim();
+    if (message) {
+      api.addMessage(this.props.userLeft, message, this.state.db)
+        
+        .catch((err) => {
+          console.log('Request failed', err);
+          this.setState({error}) //same as {error: error} - ES6 thing
+        });
+    }
+   
     this.setState({
       message: ''
     });
-    api.addMessage(this.props.userLeft, message, this.db)
-      // .then((data) => {
-      // })
-      .catch((err) => {
-        console.log('Request failed', err);
-        this.setState({error}) //same as {error: error} - ES6 thing
-      });
   }
+
   handleBack() {
     this.props.navigator.pop();
   }
+
   footer(){
     return (
       <View style={styles.footerContainer}>
         <TextInput
           style={styles.searchInput}
           value={this.state.message}
-          onChange={this.handleChange.bind(this)}
+          onChangeText={this.handleChange.bind(this)}
           placeholder="New message"
           placeholderTextColor="#b6b6b6" />
         <TouchableHighlight
@@ -96,6 +92,7 @@ class Messenger extends React.Component {
       </View>
     )
   }
+
   messageViewer(rowData) {
     if (rowData.username === this.props.userLeft.toLowerCase()) {
       return (
@@ -107,6 +104,7 @@ class Messenger extends React.Component {
       )
     }
   }
+
   render(){
     return (
       <View style={styles.mainContainer}>

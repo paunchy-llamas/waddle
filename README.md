@@ -1,6 +1,4 @@
-![](https://dl.dropboxusercontent.com/s/5utw16rifv9cmqe/banner-128.png?dl=0) 
----
-
+[<img src="https://dl.dropboxusercontent.com/s/5utw16rifv9cmqe/banner-128.png?dl=0">](http://paunchy-llamas.github.io/waddle)
 # waddle [![Build Status](https://travis-ci.org/savory-penguin/waddle.svg?branch=master)](https://travis-ci.org/savory-penguin/waddle)
 
 Waddle is a way to meet new people. Grab lunch or coffee with a someone new – who knows, it may just be the start of a beautiful friendship.

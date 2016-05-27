@@ -17,13 +17,13 @@ Supported operating systems are >= iOS 7.0
 - [Tips & Tricks](#tips--tricks)
 
 ## Team Members (v. 1.0)
-[![Nathaniel Edwards](https://dl.dropboxusercontent.com/s/9dzxid7ihg37c97/nthaniel.png?dl=0)](https://github.com/nthaniel)
+[Nathaniel Edwards](https://github.com/nthaniel)
 
-[![Michelle He](https://dl.dropboxusercontent.com/s/zecyw2vna8m56d3/michelleheh.png?dl=0)](https://github.com/michelleheh)
+[Michelle He](https://github.com/michelleheh)
 
-[![Rahim Dharrsi](https://dl.dropboxusercontent.com/s/3typmiqn3wv8f8k/rahimftd.png?dl=0)](https://github.com/rahimftd)
+[Rahim Dharrsi](https://github.com/rahimftd)
 
-[![Kevin Nguyen](https://dl.dropboxusercontent.com/s/wyebxbavnc7ihk7/kevinwin.png?dl=0)](https://github.com/kevinwin)
+[Kevin Nguyen](https://github.com/kevinwin)
 
 ## Team Members (v. 2.0)
 [Roland Fung](https://github.com/rolandfung)
@@ -172,25 +172,11 @@ It's easy to set up:
 ## Version 2.0 Features
 
 - Email / password authentication
+- Persistent login
 - Firebase chat messenger
 - Star rating system
 - Expand to include coffee
 - Integrate Uber API
-
-
-## Future Project Ideas
-
-- Integrate Facebook login / authentication
-- Geofencing. Disable / Hide 'I'm here' button until user is within a certain radius
-- Refactor app using Redux architecture
-- Write end to end tests
-- Email Validation
-- Add a user preferences / account settings / delete account / sign out section
-- Expand service to dinner, workouts, and more
-- Refine matching algorithm
-- Add push notifications (e.g. when match arrives)
-- Make layout more responsive to handle different size screens
-- Port waddle to Android
 
 ## Tips & Tricks
 

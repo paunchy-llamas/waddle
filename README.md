@@ -1,4 +1,4 @@
-[<img src="https://github.com/paunchy-llamas/waddle/blob/master/waddle.png">](http://paunchy-llamas.github.io/waddle)
+[<p align="center"><img src="https://github.com/paunchy-llamas/waddle/blob/master/waddle.png" height="350"></p>](http://paunchy-llamas.github.io/waddle)
 
 # waddle [![Build Status](https://travis-ci.org/savory-penguin/waddle.svg?branch=master)](https://travis-ci.org/savory-penguin/waddle)
 

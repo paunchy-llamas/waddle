@@ -1,18 +1,19 @@
-[<img src="https://dl.dropboxusercontent.com/s/5utw16rifv9cmqe/banner-128.png?dl=0">](http://paunchy-llamas.github.io/waddle)
+[<img src="https://github.com/paunchy-llamas/waddle/blob/master/waddle.png">](http://paunchy-llamas.github.io/waddle)
+
 # waddle [![Build Status](https://travis-ci.org/savory-penguin/waddle.svg?branch=master)](https://travis-ci.org/savory-penguin/waddle)
 
-Waddle is a way to meet new people. Grab lunch or coffee with a someone new – who knows, it may just be the start of a beautiful friendship.
+Meet new people by finding a lunch or coffee buddy, spontaneously.
 
 Supported operating systems are >= iOS 7.0
 
 - [Team Members](#team-members-v-10)
+- [Demo](#demo)
 - [Technology Stack](#technology-stack-apis-and-third-party-tools)
 - [Client Framework](#client-side-react-native)
 - [Server Setup](#server-setup-node--express)
 - [Database](#database-mongodb--mongoose)
 - [Testing](#testing-jest--jasmine)
 - [Continuous Integration](#continuous-integration-travis-ci)
-- [Legacy Project Ideas](#legacy-project-ideas)
 - [Tips & Tricks](#tips--tricks)
 
 ## Team Members (v. 1.0)
@@ -32,6 +33,9 @@ Supported operating systems are >= iOS 7.0
 [Fred Ryder](https://github.com/fredryder)
 
 [Adam Isom](https://github.com/adamrgisom)
+
+## Demo
+[Click here](http://paunchy-llamas.github.io/waddle) to view a demo.
   
 ## Technology Stack, APIs, and Third-party tools
 
